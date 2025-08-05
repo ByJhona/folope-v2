@@ -1,0 +1,42 @@
+<div class="navbar bg-base-100 shadow-sm">
+  <div class="flex-1">
+    <a class="btn btn-ghost text-xl">Folope</a>
+  </div>
+  <div class="flex-1">
+    <label class="input" for="pesquisa">
+      <lucide-angular name="search" class="h-[1em] opacity-50"></lucide-angular>
+      <input
+        id="pesquisa"
+        type="search"
+        class="grow"
+        [formControl]="pesquisa"
+        placeholder="Pesquisar..."
+        aria-label="Pesquisar"
+      />
+    </label>
+  </div>
+  <div class="flex flex-1 justify-end-safe">
+    <ul class="menu menu-horizontal px-1">
+      <li>
+        <details>
+          <summary>
+            Nome Usuario
+            <div class="btn btn-ghost btn-circle avatar">
+              <div class="w-10 rounded-full">
+                <img
+                  alt="Tailwind CSS Navbar component"
+                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                />
+              </div>
+            </div>
+          </summary>
+          <ul class="bg-base-100 rounded-t-none p-2">
+            <li><a>Perfil</a></li>
+            <li><a>Configurações</a></li>
+            <li><a>Sair</a></li>
+          </ul>
+        </details>
+      </li>
+    </ul>
+  </div>
+</div>
