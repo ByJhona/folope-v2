@@ -1,0 +1,13 @@
+<div class="stack h-100 w-80">
+  @for(filme of filmes(); track filme; let idx = $index){
+  <div
+    style="overflow: hidden"
+    class="text-primary-content grid place-content-center rounded-box"
+    cdkDragLockAxis="x"
+    cdkDrag
+    (cdkDragEnded)="deslizarCard($event, idx)"
+  >
+    <img [src]="filme.urlCapaPoster" [alt]="'Capa do filme' + filme.titulo" />
+  </div>
+  }
+</div>
