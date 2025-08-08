@@ -1,8 +1,9 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '@auth0/auth0-angular';
 import { LucideAngularModule } from 'lucide-angular';
+import { Auth } from '../../services/auth';
+import { User } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'folope-navbar',
@@ -11,12 +12,17 @@ import { LucideAngularModule } from 'lucide-angular';
   styleUrl: './navbar.scss',
 })
 export class Navbar {
+  usuario = signal<User | undefined | null>(undefined);
   pesquisa = new FormControl('');
-  constructor(public auth: AuthService) {}
+  constructor(public auth: Auth) {
+    auth.obterUsuarioAutenticado().subscribe((usuario) => {
+      this.usuario.set(usuario);
+    });
+  }
   login() {
-    this.auth.loginWithPopup();
+    this.auth.login();
   }
   logout() {
-    this.logout();
+    this.auth.logout();
   }
 }

@@ -8,25 +8,31 @@ import { LucideAngularModule } from 'lucide-angular';
 import { MeusIcones } from './icons/icons';
 import { routes } from './app.routes';
 import {
-  provideClientHydration,
-  withEventReplay,
-} from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideAuth0 } from '@auth0/auth0-angular';
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
+import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
+import { environment as env } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAuth0({
-      domain: 'dev-lt33tab3beqfm8w6.us.auth0.com',
-      clientId: 'G5ka8m7wk3vS3LzM0UnwLYVHqbPWXeDr',
+      domain: env.auth0.domain,
+      clientId: env.auth0.clientId,
       authorizationParams: {
+        audience: env.auth0.authorizationParams.audience,
         redirect_uri: window.location.origin,
+        prompt: 'login',
+        ui_locales: 'pt-BR en',
+      },
+      httpInterceptor: {
+        allowedList: [`${env.api.serverUrl}/api/privado`],
       },
     }),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([authHttpInterceptorFn])),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideClientHydration(withEventReplay()),
     importProvidersFrom(LucideAngularModule.pick(MeusIcones)),
   ],
 };

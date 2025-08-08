@@ -14,11 +14,7 @@ export class HomePage {
   filmesCurtidos: FilmeDescoberta[] = [];
   filmesDescurtidos: FilmeDescoberta[] = [];
 
-  constructor(private readonly apiServ: ApiFolope) {
-    apiServ.listarFilmes().subscribe((filmes) => {
-      this.filmes = [];
-    });
-  }
+  constructor(private readonly apiServ: ApiFolope) {}
 
   curtirFilme(filmeDescoberta: FilmeDescoberta) {
     console.log(filmeDescoberta);

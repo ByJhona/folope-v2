@@ -3,25 +3,21 @@ import { FilmeDescoberta } from '../types/FilmeDescoberta';
 import { Observable } from 'rxjs';
 import { FilmesResponse } from '../types/FilmesResponse';
 import { Filme } from '../types/Filme';
-import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { environment as env } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiFolope {
-  private readonly apiUrl: string = environment.apiUrl;
+  private readonly apiUrl: string = `${env.api.serverUrl}`;
   constructor(private readonly httpClient: HttpClient) {}
 
   publico(): Observable<string> {
-    return this.httpClient.get<string>(this.apiUrl + '/api' + '/publico', {
-      withCredentials: true,
-    });
+    return this.httpClient.get<string>(this.apiUrl + '/api' + '/publico');
   }
   privado(): Observable<string> {
-    return this.httpClient.get<string>(this.apiUrl + '/api' + '/privado', {
-      withCredentials: true,
-    });
+    return this.httpClient.get<string>(this.apiUrl + '/api' + '/privado');
   }
 
   listarFilmes(): Observable<FilmeDescoberta[]> {
