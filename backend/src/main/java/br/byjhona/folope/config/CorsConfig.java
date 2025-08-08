@@ -15,10 +15,8 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Adicione todos os domínios permitidos aqui
         configuration.setAllowedOrigins(List.of(
-                "https://quiet-louse-many.ngrok-free.app", // seu domínio ngrok
-                "http://localhost:4200" // seu Angular local
+                "http://localhost:4200"
         ));
 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
