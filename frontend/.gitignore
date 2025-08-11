@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node,angular,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,angular,visualstudiocode
 
+.env
 ### Angular ###
 ## Angular ##
 # compiled output
