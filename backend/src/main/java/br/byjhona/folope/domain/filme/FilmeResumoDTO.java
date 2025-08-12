@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record FilmeDescobertaDTO(
+public record FilmeResumoDTO(
         @JsonAlias("id")
         Long id,
         @JsonAlias("title")
@@ -22,7 +22,7 @@ public record FilmeDescobertaDTO(
         @JsonAlias("vote_average")
         float nota
 ) {
-    public FilmeDescobertaDTO(
+    public FilmeResumoDTO(
             Long id,
             String titulo,
             String urlCapaFundo,

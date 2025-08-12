@@ -4,14 +4,12 @@ import br.byjhona.folope.domain.Mensagem;
 import br.byjhona.folope.service.TmdbAPI;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "api", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "*")
 public class APIController {
     private final TmdbAPI api;
 
@@ -22,7 +20,6 @@ public class APIController {
     @GetMapping(value = "/publico")
     public ResponseEntity<Mensagem> publicEndpoint() {
         Mensagem mensagem = new Mensagem("All good. You DO NOT need to be authenticated to call /api/public.");
-        System.out.println(this.api.buscarFilmesDescoberta());
         return ResponseEntity.ok().body(mensagem);
     }
 

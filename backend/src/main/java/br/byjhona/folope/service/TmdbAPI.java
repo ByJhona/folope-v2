@@ -1,6 +1,7 @@
 package br.byjhona.folope.service;
 
-import br.byjhona.folope.domain.filme.FilmeDescobertaDTO;
+import br.byjhona.folope.domain.filme.FilmeResumoDTO;
+import br.byjhona.folope.domain.paginacao.Paginacao;
 import br.byjhona.folope.properties.TmdbApiProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -29,21 +30,44 @@ public class TmdbAPI {
                 .build();
     }
 
-    public List<FilmeDescobertaDTO> buscarFilmesDescoberta() {
+    public Paginacao<FilmeResumoDTO> buscarFilmesDescoberta(String parametros) {
         String filmesString = client.get()
                 .uri("/discover/movie")
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
+        return extrairFilmesResumo(filmesString);
+    }
+
+    public Paginacao<FilmeResumoDTO> buscarFilmesPopulares(String parametros) {
+        String filmesString = client.get()
+                .uri("/movie/popular")
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        return extrairFilmesResumo(filmesString);
+    }
+
+    private Paginacao<FilmeResumoDTO> extrairFilmesResumo(String filmesString) {
         try {
             JsonNode raiz = json.readTree(filmesString);
             JsonNode resultadosArray = raiz.path("results");
-            return json.readValue(resultadosArray.traverse(), new TypeReference<List<FilmeDescobertaDTO>>() {
+            JsonNode pageNode = raiz.path("page");
+            JsonNode totalPagesNode = raiz.path("total_pages");
+            JsonNode totalResultsNode = raiz.path("total_results");
+
+            Integer pagina = extrairNumeroNo(pageNode);
+            Integer totalPaginas = extrairNumeroNo(totalPagesNode);
+            Integer totalResultados = extrairNumeroNo(totalResultsNode);
+            List<FilmeResumoDTO> filmesDTO = json.readValue(resultadosArray.traverse(), new TypeReference<List<FilmeResumoDTO>>() {
             });
+            return new Paginacao<>(pagina, totalPaginas, totalResultados, filmesDTO);
         } catch (IOException ignored) {
+            throw new RuntimeException();
         }
-        return null;
     }
 
-
+    private Integer extrairNumeroNo(JsonNode node) {
+        return node.isNumber() ? node.asInt() : null;
+    }
 }
