@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
 import { FilmeResumo } from '../../types/FilmeResumo';
+import { Stars } from '../stars/stars';
 
 @Component({
   selector: 'folope-card-info',
-  imports: [],
+  imports: [Stars],
   templateUrl: './card-info.html',
   styleUrl: './card-info.scss',
 })
