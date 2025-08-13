@@ -1,6 +1,6 @@
 <div class="navbar bg-base-100 shadow-sm">
   <div class="flex-1">
-    <a class="btn btn-ghost text-xl">Folope</a>
+    <a class="btn btn-ghost text-xl" routerLink="/">Folope</a>
   </div>
   <div class="flex-1">
     <label class="input" for="pesquisa">
@@ -17,6 +17,26 @@
   </div>
   <div class="flex flex-1 justify-end-safe">
     <ul class="menu menu-horizontal px-1">
+      <li>
+        <label class="flex cursor-pointer gap-2" for="trocar-tema">
+          <lucide-angular
+            name="moon"
+            class="h-[1.5em] opacity-70"
+          ></lucide-angular>
+          <input
+            id="trocar-tema"
+            type="checkbox"
+            value="light"
+            class="toggle theme-controller"
+            aria-labelledby="label-trocar-tema"
+          />
+          <span id="label-trocar-tema" class="sr-only">Alternar tema</span>
+          <lucide-angular
+            name="sun"
+            class="h-[1.5em] opacity-70"
+          ></lucide-angular>
+        </label>
+      </li>
       @if(!(auth.obterEstadoUsuarioAutenticado() | async)){
       <li><a href="" (click)="login()">Login</a></li>
       }@else{

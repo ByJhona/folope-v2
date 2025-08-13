@@ -6,6 +6,7 @@ export const routes: Routes = [
   {
     path: '',
     component: HomePage,
+    title: 'Folope - Home',
   },
-  { path: '**', component: NotFoundPage },
+  { path: '**', component: NotFoundPage, title: 'Folope - Not Found' },
 ];

@@ -1,33 +1,41 @@
 import { Component } from '@angular/core';
 import { ApiFolope } from '../../services/api-folope';
-import { FilmeDescoberta } from '../../types/FilmeDescoberta';
-import { CardDeslizante } from '../../components/card-deslizante/card-deslizante';
+import { FilmeResumo } from '../../types/FilmeResumo';
+import { Paginacao } from '../../types/Paginacao';
+import { CardInfo } from '../../components/card-info/card-info';
 
 @Component({
   selector: 'folope-home-page',
-  imports: [CardDeslizante],
+  imports: [CardInfo],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })
 export class HomePage {
-  filmes!: FilmeDescoberta[];
-  filmesCurtidos: FilmeDescoberta[] = [];
-  filmesDescurtidos: FilmeDescoberta[] = [];
+  filmes!: FilmeResumo[];
+  filmesCurtidos: FilmeResumo[] = [];
+  filmesDescurtidos: FilmeResumo[] = [];
 
-  constructor(private readonly apiServ: ApiFolope) {}
-
-  curtirFilme(filmeDescoberta: FilmeDescoberta) {
-    console.log(filmeDescoberta);
-    this.filmesCurtidos.push(filmeDescoberta);
-    this.removerFilmeLista(filmeDescoberta);
-  }
-  descurtirFilme(filmeDescoberta: FilmeDescoberta) {
-    this.filmesDescurtidos.push(filmeDescoberta);
-    this.removerFilmeLista(filmeDescoberta);
+  constructor(private readonly apiServ: ApiFolope) {
+    apiServ
+      .listarFilmes()
+      .subscribe((filmesPaginados: Paginacao<FilmeResumo>) => {
+        this.filmes = filmesPaginados.resultados;
+        console.log(filmesPaginados);
+      });
   }
 
-  removerFilmeLista(filmeDescoberta: FilmeDescoberta) {
-    this.filmes = this.filmes.filter((filme) => filme != filmeDescoberta);
+  curtirFilme(FilmeResumo: FilmeResumo) {
+    console.log(FilmeResumo);
+    this.filmesCurtidos.push(FilmeResumo);
+    this.removerFilmeLista(FilmeResumo);
+  }
+  descurtirFilme(FilmeResumo: FilmeResumo) {
+    this.filmesDescurtidos.push(FilmeResumo);
+    this.removerFilmeLista(FilmeResumo);
+  }
+
+  removerFilmeLista(FilmeResumo: FilmeResumo) {
+    this.filmes = this.filmes.filter((filme) => filme != FilmeResumo);
   }
 
   publico() {

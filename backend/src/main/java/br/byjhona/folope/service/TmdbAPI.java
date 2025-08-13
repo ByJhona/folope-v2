@@ -15,17 +15,17 @@ import java.util.List;
 @Service
 public class TmdbAPI {
     private final WebClient client;
-    private final TmdbApiProperties properties;
+    private final TmdbApiProperties propriedades;
     private final ObjectMapper json;
 
-    public TmdbAPI(WebClient.Builder builder, TmdbApiProperties properties, ObjectMapper json) {
+    public TmdbAPI(WebClient.Builder builder, TmdbApiProperties propriedades, ObjectMapper json) {
         this.json = json;
-        this.properties = properties;
+        this.propriedades = propriedades;
         this.client = builder
-                .baseUrl(properties.getUri())
+                .baseUrl(propriedades.getUri())
                 .defaultHeaders(httpHeaders -> {
                     httpHeaders.add("accept", "application/json");
-                    httpHeaders.add("Authorization", "Bearer " + properties.getToken());
+                    httpHeaders.add("Authorization", "Bearer " + propriedades.getToken());
                 })
                 .build();
     }

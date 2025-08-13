@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { FilmeDescoberta } from '../types/FilmeDescoberta';
+import { Paginacao } from '../types/Paginacao';
 import { Observable } from 'rxjs';
-import { FilmesResponse } from '../types/FilmesResponse';
 import { Filme } from '../types/Filme';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from '../../environments/environment';
+import { FilmeResumo } from '../types/FilmeResumo';
 
 @Injectable({
   providedIn: 'root',
@@ -20,36 +20,29 @@ export class ApiFolope {
     return this.httpClient.get<string>(this.apiUrl + '/api' + '/privado');
   }
 
-  listarFilmes(): Observable<FilmeDescoberta[]> {
-    return this.httpClient.get<FilmeDescoberta[]>(
-      this.apiUrl + '/filme' + '/buscar',
-      {
-        withCredentials: true,
-      }
+  listarFilmes(): Observable<Paginacao<FilmeResumo>> {
+    return this.httpClient.get<Paginacao<FilmeResumo>>(
+      this.apiUrl + '/filme' + '/buscar/popular'
     );
   }
 
   pesquisarFilmeTitulo(
     titulo: string,
     numPagina: number
-  ): Observable<FilmesResponse> {
-    return this.httpClient.get<FilmesResponse>(
+  ): Observable<Paginacao<FilmeResumo>> {
+    return this.httpClient.get<Paginacao<FilmeResumo>>(
       this.apiUrl +
         '/filme' +
         '/buscar/titulo?titulo=' +
         titulo +
         '&pagina=' +
-        numPagina,
-      { withCredentials: true }
+        numPagina
     );
   }
 
   pesquisarFilmeId(id: number): Observable<Filme> {
     return this.httpClient.get<Filme>(
-      this.apiUrl + '/filme' + '/buscar/id?id=' + id,
-      {
-        withCredentials: true,
-      }
+      this.apiUrl + '/filme' + '/buscar/id?id=' + id
     );
   }
 }

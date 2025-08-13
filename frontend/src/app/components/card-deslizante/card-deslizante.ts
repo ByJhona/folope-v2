@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { CdkDrag, CdkDragEnd } from '@angular/cdk/drag-drop';
-import { FilmeDescoberta } from '../../types/FilmeDescoberta';
+import { FilmeResumo } from '../../types/FilmeResumo';
 
 @Component({
   selector: 'folope-card-deslizante',
@@ -9,9 +9,9 @@ import { FilmeDescoberta } from '../../types/FilmeDescoberta';
   styleUrl: './card-deslizante.scss',
 })
 export class CardDeslizante {
-  filmes = input.required<FilmeDescoberta[]>();
-  filmeCurtido = output<FilmeDescoberta>();
-  filmeDescurtido = output<FilmeDescoberta>();
+  filmes = input.required<FilmeResumo[]>();
+  filmeCurtido = output<FilmeResumo>();
+  filmeDescurtido = output<FilmeResumo>();
   readonly limiteSwipe = 150;
 
   deslizarCard(event: CdkDragEnd<any>, index: number) {

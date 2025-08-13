@@ -4,10 +4,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { Auth } from '../../services/auth';
 import { User } from '@auth0/auth0-angular';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'folope-navbar',
-  imports: [ReactiveFormsModule, LucideAngularModule, AsyncPipe],
+  imports: [ReactiveFormsModule, LucideAngularModule, AsyncPipe, RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })

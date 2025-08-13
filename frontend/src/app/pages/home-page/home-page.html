@@ -1,12 +1,7 @@
-<p>home-page works!</p>
-
-@if(filmes!== undefined){
-<folope-card-deslizante
-  [filmes]="filmes"
-  (filmeCurtido)="curtirFilme($event)"
-  (filmeDescurtido)="descurtirFilme($event)"
-></folope-card-deslizante>
-}
-
-<button (click)="publico()">Publico</button>
-<button (click)="privado()">Privado</button>
+<div class="carousel carousel-center rounded-box w-full space-x-4 p-4">
+  @for(filme of filmes; track filme.id){
+  <div class="carousel-item">
+    <folope-card-info [filme]="filme" />
+  </div>
+  }
+</div>
