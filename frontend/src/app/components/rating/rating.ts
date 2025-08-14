@@ -1,10 +1,10 @@
 import { Component, input } from '@angular/core';
 
 @Component({
-  selector: 'folope-stars',
+  selector: 'folope-rating',
   imports: [],
-  templateUrl: './stars.html',
-  styleUrl: './stars.scss',
+  templateUrl: './rating.html',
+  styleUrl: './rating.scss',
 })
 export class Stars {
   id = input.required<number>();

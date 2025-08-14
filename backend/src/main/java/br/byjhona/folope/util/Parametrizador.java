@@ -4,8 +4,6 @@ import br.byjhona.folope.domain.parametro.ParametroDTO;
 import br.byjhona.folope.properties.TmdbApiProperties;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Optional;
-
 public class Parametrizador {
     TmdbApiProperties properties;
 
@@ -17,11 +15,23 @@ public class Parametrizador {
 
         UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
 
-        Optional.ofNullable(parametros.sortear()).ifPresent(parametro -> builder.queryParam("sort_by", parametro));
-        Optional.ofNullable(parametros.genero()).ifPresent(parametro -> builder.queryParam("with_genres", parametro));
-        Optional.ofNullable(parametros.query()).ifPresent(parametro -> builder.queryParam("query", parametro));
-        Optional.ofNullable(parametros.pagina()).ifPresent(parametro -> builder.queryParam("page", parametro));
-        Optional.ofNullable(parametros.pagina()).ifPresent(parametro -> builder.queryParam("language", "pt-BR"));
+        parametros.sortear()
+                .filter(s -> !s.isBlank())
+                .ifPresent(p -> builder.queryParam("sort_by", p));
+
+        parametros.genero()
+                .filter(s -> !s.isBlank())
+                .ifPresent(p -> builder.queryParam("with_genres", p));
+
+        parametros.query()
+                .filter(s -> !s.isBlank())
+                .ifPresent(p -> builder.queryParam("query", p));
+
+        parametros.pagina()
+                .filter(s -> !s.isBlank())
+                .ifPresent(p -> builder.queryParam("page", p));
+
+        builder.queryParam("language", "pt-BR");
 
         return builder.toUriString();
     }

@@ -1,3 +1,7 @@
+@if (filmeMaisPopular !== undefined) {
+<folope-card-filme-principal [filme]="filmeMaisPopular" />
+}
+
 <div class="carousel carousel-center rounded-box w-full space-x-4 p-4">
   @for(filme of filmes; track filme.id){
   <div class="carousel-item">

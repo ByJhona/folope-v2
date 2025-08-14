@@ -1,4 +1,4 @@
-<div class="card bg-base-300 w-44 shadow-sm">
+<div class="card bg-base-300 w-44 h-96 shadow-sm">
   <figure>
     <img [src]="filme().urlCapaPoster" [alt]="filme().titulo" />
   </figure>
@@ -8,6 +8,6 @@
     >
       {{ filme().titulo }}
     </h2>
-    <folope-stars [id]="filme().id" [nota]="filme().nota"></folope-stars>
+    <folope-rating [id]="filme().id" [nota]="filme().nota"></folope-rating>
   </div>
 </div>

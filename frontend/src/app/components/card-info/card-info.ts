@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { FilmeResumo } from '../../types/FilmeResumo';
-import { Stars } from '../stars/stars';
+import { Stars } from '../rating/rating';
 
 @Component({
   selector: 'folope-card-info',

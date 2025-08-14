@@ -32,7 +32,7 @@ public class TmdbAPI {
 
     public Paginacao<FilmeResumoDTO> buscarFilmesDescoberta(String parametros) {
         String filmesString = client.get()
-                .uri("/discover/movie")
+                .uri("/discover/movie" + parametros)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -40,8 +40,9 @@ public class TmdbAPI {
     }
 
     public Paginacao<FilmeResumoDTO> buscarFilmesPopulares(String parametros) {
+        System.out.println(parametros);
         String filmesString = client.get()
-                .uri("/movie/popular")
+                .uri("/movie/popular" + parametros)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

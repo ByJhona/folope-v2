@@ -1,0 +1,16 @@
+<div class="hero bg-base-200 min-h-6/12">
+  <div class="hero-content flex-col lg:flex-row">
+    <img
+      [src]="filme().urlCapaPoster"
+      class="max-w-sm rounded-lg shadow-2xl"
+      [alt]="'Pôster do filme ' + filme().titulo"
+    />
+    <div class="ml-12">
+      <h1 class="text-5xl font-bold">{{ filme().titulo }}</h1>
+      <p class="py-6">
+        {{ filme().sinopse }}
+      </p>
+      <button class="btn btn-primary">Assistir ao trailer</button>
+    </div>
+  </div>
+</div>

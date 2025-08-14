@@ -3,15 +3,17 @@ import { ApiFolope } from '../../services/api-folope';
 import { FilmeResumo } from '../../types/FilmeResumo';
 import { Paginacao } from '../../types/Paginacao';
 import { CardInfo } from '../../components/card-info/card-info';
+import { CardFilmePrincipal } from '../../components/card-filme-principal/card-filme-principal';
 
 @Component({
   selector: 'folope-home-page',
-  imports: [CardInfo],
+  imports: [CardInfo, CardFilmePrincipal],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })
 export class HomePage {
   filmes!: FilmeResumo[];
+  filmeMaisPopular!: FilmeResumo;
   filmesCurtidos: FilmeResumo[] = [];
   filmesDescurtidos: FilmeResumo[] = [];
 
@@ -19,13 +21,13 @@ export class HomePage {
     apiServ
       .listarFilmes()
       .subscribe((filmesPaginados: Paginacao<FilmeResumo>) => {
+        this.filmeMaisPopular = filmesPaginados.resultados[0];
+        filmesPaginados.resultados.shift();
         this.filmes = filmesPaginados.resultados;
-        console.log(filmesPaginados);
       });
   }
 
   curtirFilme(FilmeResumo: FilmeResumo) {
-    console.log(FilmeResumo);
     this.filmesCurtidos.push(FilmeResumo);
     this.removerFilmeLista(FilmeResumo);
   }
