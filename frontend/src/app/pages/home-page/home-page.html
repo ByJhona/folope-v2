@@ -1,5 +1,5 @@
 @if (filmeMaisPopular !== undefined) {
-<folope-card-filme-principal [filme]="filmeMaisPopular" />
+<folope-card-filme-principal [filme]="filmeMaisPopular" tipo="homePage" />
 }
 
 <div class="carousel carousel-center rounded-box w-full space-x-4 p-4">
@@ -9,3 +9,11 @@
   </div>
   }
 </div>
+
+<folope-card-deslizante
+  [filmes]="filmes"
+  (filmeCurtido)="curtirFilme($event)"
+  (filmeDescurtido)="descurtirFilme($event)"
+  title="Filmes em alta"
+  subtitle="Confira os filmes mais populares do momento"
+></folope-card-deslizante>

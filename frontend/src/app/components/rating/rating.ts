@@ -6,7 +6,7 @@ import { Component, input } from '@angular/core';
   templateUrl: './rating.html',
   styleUrl: './rating.scss',
 })
-export class Stars {
+export class Rating {
   id = input.required<number>();
   nota = input.required<number>();
   estrelas = [false, false, false, false, false, false, false, false, false];

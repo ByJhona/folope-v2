@@ -28,7 +28,6 @@ public class Parametrizador {
                 .ifPresent(p -> builder.queryParam("query", p));
 
         parametros.pagina()
-                .filter(s -> !s.isBlank())
                 .ifPresent(p -> builder.queryParam("page", p));
 
         builder.queryParam("language", "pt-BR");

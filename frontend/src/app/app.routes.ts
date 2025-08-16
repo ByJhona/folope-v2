@@ -8,5 +8,11 @@ export const routes: Routes = [
     component: HomePage,
     title: 'Folope - Home',
   },
+  {
+    path: 'filme/:id',
+    loadComponent: () =>
+      import('./pages/filme-page/filme-page').then((m) => m.FilmePage),
+    title: 'Folope - Filme',
+  },
   { path: '**', component: NotFoundPage, title: 'Folope - Not Found' },
 ];

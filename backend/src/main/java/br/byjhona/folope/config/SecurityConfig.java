@@ -16,11 +16,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/filme/buscar/descoberta").permitAll()
-                        .requestMatchers("/filme/buscar/popular").permitAll()
+                        .requestMatchers("/filme/**").permitAll()
                         .requestMatchers("/api/publico").permitAll()
                         .requestMatchers("/api/privado").authenticated()
                         .requestMatchers("/api/private-scoped").hasAuthority("SCOPE_read:messages")
+                        .anyRequest().authenticated()
                 )
                 .cors(withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2

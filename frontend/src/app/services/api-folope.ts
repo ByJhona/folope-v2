@@ -5,6 +5,7 @@ import { Filme } from '../types/Filme';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from '../../environments/environment';
 import { FilmeResumo } from '../types/FilmeResumo';
+import { Comentario } from '../types/Comentario';
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +21,9 @@ export class ApiFolope {
     return this.httpClient.get<string>(this.apiUrl + '/api' + '/privado');
   }
 
-  listarFilmes(): Observable<Paginacao<FilmeResumo>> {
+  listarFilmesPopulares(): Observable<Paginacao<FilmeResumo>> {
     return this.httpClient.get<Paginacao<FilmeResumo>>(
-      this.apiUrl + '/filme' + '/buscar/popular'
+      this.apiUrl + '/filme' + '/popular'
     );
   }
 
@@ -33,7 +34,7 @@ export class ApiFolope {
     return this.httpClient.get<Paginacao<FilmeResumo>>(
       this.apiUrl +
         '/filme' +
-        '/buscar/titulo?titulo=' +
+        '/buscar/titulo/' +
         titulo +
         '&pagina=' +
         numPagina
@@ -41,8 +42,12 @@ export class ApiFolope {
   }
 
   pesquisarFilmeId(id: number): Observable<Filme> {
-    return this.httpClient.get<Filme>(
-      this.apiUrl + '/filme' + '/buscar/id?id=' + id
+    return this.httpClient.get<Filme>(this.apiUrl + '/filme' + '/id/' + id);
+  }
+
+  pesquisarComentariosFilmeId(id: number): Observable<Paginacao<Comentario>> {
+    return this.httpClient.get<Paginacao<Comentario>>(
+      this.apiUrl + '/filme' + '/id/' + id + '/comentarios'
     );
   }
 }

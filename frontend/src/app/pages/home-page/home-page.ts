@@ -4,10 +4,11 @@ import { FilmeResumo } from '../../types/FilmeResumo';
 import { Paginacao } from '../../types/Paginacao';
 import { CardInfo } from '../../components/card-info/card-info';
 import { CardFilmePrincipal } from '../../components/card-filme-principal/card-filme-principal';
+import { CardDeslizante } from '../../components/card-deslizante/card-deslizante';
 
 @Component({
   selector: 'folope-home-page',
-  imports: [CardInfo, CardFilmePrincipal],
+  imports: [CardInfo, CardFilmePrincipal, CardDeslizante],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })
@@ -19,11 +20,12 @@ export class HomePage {
 
   constructor(private readonly apiServ: ApiFolope) {
     apiServ
-      .listarFilmes()
+      .listarFilmesPopulares()
       .subscribe((filmesPaginados: Paginacao<FilmeResumo>) => {
         this.filmeMaisPopular = filmesPaginados.resultados[0];
         filmesPaginados.resultados.shift();
         this.filmes = filmesPaginados.resultados;
+        console.log('Filmes Populares:', filmesPaginados);
       });
   }
 

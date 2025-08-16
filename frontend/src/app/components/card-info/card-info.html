@@ -1,4 +1,7 @@
-<div class="card bg-base-300 w-44 h-96 shadow-sm">
+<button
+  class="card bg-base-300 w-44 h-96 shadow-sm cursor-pointer"
+  (click)="buscarDetalhesFilme()"
+>
   <figure>
     <img [src]="filme().urlCapaPoster" [alt]="filme().titulo" />
   </figure>
@@ -10,4 +13,4 @@
     </h2>
     <folope-rating [id]="filme().id" [nota]="filme().nota"></folope-rating>
   </div>
-</div>
+</button>

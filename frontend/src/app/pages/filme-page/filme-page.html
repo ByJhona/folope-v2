@@ -1,0 +1,9 @@
+@if (filme !== undefined) {
+
+<folope-card-filme-principal
+  [filme]="filme"
+  tipo="filmePage"
+></folope-card-filme-principal>
+} @for (comentario of comentarios; track comentario.id) {
+<folope-card-comentario [comentario]="comentario"></folope-card-comentario>
+}
