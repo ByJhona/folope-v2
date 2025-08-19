@@ -1,19 +1,18 @@
-@if (filmeMaisPopular !== undefined) {
-<folope-card-filme-principal [filme]="filmeMaisPopular" tipo="homePage" />
-}
-
-<div class="carousel carousel-center rounded-box w-full space-x-4 p-4">
-  @for(filme of filmes; track filme.id){
-  <div class="carousel-item">
-    <folope-card-info [filme]="filme" />
-  </div>
+<div class="conatiner-home flex flex-col gap-8">
+  @if (filmeMaisPopular !== undefined) {
+  <folope-card-filme-principal [filme]="filmeMaisPopular" tipo="homePage" />
   }
-</div>
 
-<folope-card-deslizante
-  [filmes]="filmes"
-  (filmeCurtido)="curtirFilme($event)"
-  (filmeDescurtido)="descurtirFilme($event)"
-  title="Filmes em alta"
-  subtitle="Confira os filmes mais populares do momento"
-></folope-card-deslizante>
+  <div class="container self-center">
+    <div class="filmes-populares">
+      <h2 class="font-black text-3xl">Filmes Populares</h2>
+      <div class="carousel carousel-center rounded-box w-full space-x-4 p-4">
+        @for(filme of filmes; track filme.id){
+        <div class="carousel-item">
+          <folope-card-info [filme]="filme" />
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

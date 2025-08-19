@@ -12,7 +12,17 @@
     {{ comentario().detalhes_autor.nomeUsuario }}
     <time class="text-xs opacity-50">{{ comentario().criado }}</time>
   </div>
-  <div class="chat-bubble">{{ comentario().comentario }}</div>
+  <div class="chat-bubble flex flex-col gap-2">
+    <p [class.comentario-recolhido]="comentarioRecolhido()">
+      {{ comentario().comentario }}
+    </p>
+    <button
+      class="btn btn-soft btn-xs self-end"
+      (click)="alterarEstadoComentario()"
+    >
+      {{ comentarioRecolhido() ? "Expandir" : "Recolher" }}
+    </button>
+  </div>
   <div class="chat-footer opacity-50">
     {{ comentario().detalhes_autor.nota ?? "Nota não informada" }}
   </div>

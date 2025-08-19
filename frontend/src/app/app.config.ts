@@ -3,7 +3,7 @@ import {
   importProvidersFrom,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { MeusIcones } from './icons/icons';
 import { routes } from './app.routes';
@@ -32,7 +32,12 @@ export const appConfig: ApplicationConfig = {
     }),
     provideHttpClient(withFetch(), withInterceptors([authHttpInterceptorFn])),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        anchorScrolling: 'enabled',
+      })
+    ),
     importProvidersFrom(LucideAngularModule.pick(MeusIcones)),
   ],
 };

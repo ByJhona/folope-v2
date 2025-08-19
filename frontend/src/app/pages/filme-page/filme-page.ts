@@ -1,4 +1,10 @@
-import { Component, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { CardFilmePrincipal } from '../../components/card-filme-principal/card-filme-principal';
 import { FilmeResumo } from '../../types/FilmeResumo';
 import { ApiFolope } from '../../services/api-folope';
@@ -6,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin, switchMap } from 'rxjs';
 import { CardComentario } from '../../components/card-comentario/card-comentario';
 import { Comentario } from '../../types/Comentario';
+import { ImagemFilme } from '../../types/ImagemFilme';
 
 @Component({
   selector: 'folope-filme-page',
@@ -18,6 +25,8 @@ export class FilmePage {
   private readonly api = inject(ApiFolope);
   filme: FilmeResumo | undefined = undefined;
   comentarios!: Comentario[];
+  imagens!: ImagemFilme[];
+  @ViewChildren('carouselItem') itensCarrosselImagens!: QueryList<ElementRef>;
 
   constructor() {
     this.rotaAtiva.params
@@ -27,13 +36,29 @@ export class FilmePage {
           return forkJoin({
             filme: this.api.pesquisarFilmeId(id),
             comentarios: this.api.pesquisarComentariosFilmeId(id),
+            imagens: this.api.pesquisarImagensFilmeId(id),
           });
         })
       )
-      .subscribe(({ filme, comentarios }) => {
+      .subscribe(({ filme, comentarios, imagens }) => {
         this.filme = filme;
         this.comentarios = comentarios.resultados;
+        this.imagens = imagens;
+        console.log('Imagens do filme:', this.imagens);
         console.log('Filme:', filme);
       });
+  }
+
+  navegarCarrossel(index: number): void {
+    const indexTratada = (index + this.imagens.length) % this.imagens.length;
+
+    const element = this.itensCarrosselImagens.get(indexTratada);
+    if (element) {
+      element.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'start',
+      });
+    }
   }
 }

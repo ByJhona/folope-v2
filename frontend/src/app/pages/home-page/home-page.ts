@@ -4,11 +4,10 @@ import { FilmeResumo } from '../../types/FilmeResumo';
 import { Paginacao } from '../../types/Paginacao';
 import { CardInfo } from '../../components/card-info/card-info';
 import { CardFilmePrincipal } from '../../components/card-filme-principal/card-filme-principal';
-import { CardDeslizante } from '../../components/card-deslizante/card-deslizante';
 
 @Component({
   selector: 'folope-home-page',
-  imports: [CardInfo, CardFilmePrincipal, CardDeslizante],
+  imports: [CardInfo, CardFilmePrincipal],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })

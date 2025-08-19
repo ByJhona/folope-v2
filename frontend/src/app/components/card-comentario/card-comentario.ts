@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { Comentario } from '../../types/Comentario';
 
 @Component({
@@ -9,9 +9,14 @@ import { Comentario } from '../../types/Comentario';
 })
 export class CardComentario {
   comentario = input.required<Comentario>();
+  comentarioRecolhido = signal(true);
 
   ngOnInit() {
     console.log('Comentario:', this.comentario().id);
     console.log('Comentario:', this.comentario());
+  }
+
+  alterarEstadoComentario() {
+    this.comentarioRecolhido.update((recolhido) => !recolhido);
   }
 }

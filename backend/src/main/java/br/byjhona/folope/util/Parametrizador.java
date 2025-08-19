@@ -30,7 +30,15 @@ public class Parametrizador {
         parametros.pagina()
                 .ifPresent(p -> builder.queryParam("page", p));
 
-        builder.queryParam("language", "pt-BR");
+        parametros.idioma()
+                .ifPresent(p -> builder.queryParam("language", p));
+
+        parametros.idiomaImagem()
+                .ifPresent(p -> builder.queryParam("include_image_language", p));
+
+
+        //builder.queryParam("language", "pt-BR");
+
 
         return builder.toUriString();
     }

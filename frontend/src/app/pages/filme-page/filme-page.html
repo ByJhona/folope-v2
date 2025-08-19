@@ -1,9 +1,44 @@
-@if (filme !== undefined) {
+<div class="container-filme-page flex flex-col">
+  @if (filme !== undefined) {
+  <folope-card-filme-principal
+    [filme]="filme"
+    tipo="filmePage"
+  ></folope-card-filme-principal>
+  }
 
-<folope-card-filme-principal
-  [filme]="filme"
-  tipo="filmePage"
-></folope-card-filme-principal>
-} @for (comentario of comentarios; track comentario.id) {
-<folope-card-comentario [comentario]="comentario"></folope-card-comentario>
-}
+  <div class="container self-center flex flex-col gap-11 mt-8">
+    <div class="fotografias flex flex-col">
+      <h2 class="text-3xl font-bold mb-8">Imagens</h2>
+      <div class="carousel w-5xl self-center">
+        @for(imagem of imagens; track $index) {
+        <div
+          #carouselItem
+          [id]="'img' + $index"
+          class="carousel-item relative w-full"
+        >
+          <img [src]="imagem.url" class="w-full" alt="teste" />
+          <div
+            class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between"
+          >
+            <a (click)="navegarCarrossel($index - 1)" class="btn btn-circle"
+              >❮</a
+            >
+
+            <a (click)="navegarCarrossel($index + 1)" class="btn btn-circle"
+              >❯</a
+            >
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+    <div class="comentarios">
+      <h2 class="text-3xl font-bold mb-8">Comentários</h2>
+      @for (comentario of comentarios; track comentario.id) {
+      <folope-card-comentario
+        [comentario]="comentario"
+      ></folope-card-comentario>
+      }
+    </div>
+  </div>
+</div>

@@ -12,6 +12,7 @@
       );
     "
   ></div>
+  <div class="hero-overlay"></div>
 
   <div class="hero-content flex-col lg:flex-row relative z-10">
     <img
@@ -19,8 +20,18 @@
       class="max-w-sm rounded-lg shadow-2xl"
       [alt]="'Pôster do filme ' + filme().titulo"
     />
+
     <div class="ml-12">
-      <h1 class="text-5xl font-bold text-base-content">{{ filme().titulo }}</h1>
+      <button
+        (click)="buscarDetalhesFilme()"
+        [class.cursor-pointer]="tipo() !== 'filmePage'"
+        [class.disabled]="tipo() === 'filmePage'"
+      >
+        <h1 class="text-5xl font-bold text-base-content">
+          {{ filme().titulo }}
+        </h1>
+      </button>
+
       <div class="informacoes-filme flex flex-direction-row items-center gap-4">
         <folope-rating [id]="filme().id" [nota]="filme().nota"></folope-rating>
         <span>|</span>

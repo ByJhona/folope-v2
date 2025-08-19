@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment as env } from '../../environments/environment';
 import { FilmeResumo } from '../types/FilmeResumo';
 import { Comentario } from '../types/Comentario';
+import { ImagemFilme } from '../types/ImagemFilme';
 
 @Injectable({
   providedIn: 'root',
@@ -42,12 +43,25 @@ export class ApiFolope {
   }
 
   pesquisarFilmeId(id: number): Observable<Filme> {
-    return this.httpClient.get<Filme>(this.apiUrl + '/filme' + '/id/' + id);
+    return this.httpClient.get<Filme>(
+      this.apiUrl + '/filme' + '/id/' + id + '?idioma=pt-BR'
+    );
   }
 
   pesquisarComentariosFilmeId(id: number): Observable<Paginacao<Comentario>> {
     return this.httpClient.get<Paginacao<Comentario>>(
       this.apiUrl + '/filme' + '/id/' + id + '/comentarios'
+    );
+  }
+
+  pesquisarImagensFilmeId(id: number): Observable<ImagemFilme[]> {
+    return this.httpClient.get<ImagemFilme[]>(
+      this.apiUrl +
+        '/filme' +
+        '/id/' +
+        id +
+        '/imagens' +
+        '?idiomaImagem=pt-BR,en'
     );
   }
 }
