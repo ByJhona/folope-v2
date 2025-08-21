@@ -24,7 +24,6 @@ export class HomePage {
         this.filmeMaisPopular = filmesPaginados.resultados[0];
         filmesPaginados.resultados.shift();
         this.filmes = filmesPaginados.resultados;
-        console.log('Filmes Populares:', filmesPaginados);
       });
   }
 

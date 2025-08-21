@@ -57,5 +57,6 @@ public class FilmeController {
         List<ImagemFilmeDTO> imagensDTO = api.buscarImagensFilme(parametros, id);
         return ResponseEntity.ok().body(imagensDTO);
     }
+    
 
 }

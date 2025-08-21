@@ -7,6 +7,7 @@ import { environment as env } from '../../environments/environment';
 import { FilmeResumo } from '../types/FilmeResumo';
 import { Comentario } from '../types/Comentario';
 import { ImagemFilme } from '../types/ImagemFilme';
+import { CurtidaAlvoEnum, Curtida } from '../types/Curtida';
 
 @Injectable({
   providedIn: 'root',
@@ -62,6 +63,22 @@ export class ApiFolope {
         id +
         '/imagens' +
         '?idiomaImagem=pt-BR,en'
+    );
+  }
+
+  salvarCurtida(idAlvo: number, alvo: CurtidaAlvoEnum): Observable<Curtida> {
+    return this.httpClient.post<Curtida>(this.apiUrl + '/curtidas', {
+      idAlvo,
+      alvo,
+    });
+  }
+
+  buscarExistenciaCurtida(
+    idAlvo: number,
+    alvo: CurtidaAlvoEnum
+  ): Observable<boolean> {
+    return this.httpClient.get<boolean>(
+      this.apiUrl + '/curtidas/existe?' + 'idAlvo=' + idAlvo + '&alvo=' + alvo
     );
   }
 }

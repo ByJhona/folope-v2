@@ -99,7 +99,6 @@ public class TmdbAPI {
 
     private Paginacao<ComentarioDTO> extrairComentariosFilme(String comentariosString) {
         try {
-            System.out.println(comentariosString);
             JsonNode raiz = json.readTree(comentariosString);
             JsonNode resultadosArray = raiz.path("results");
             JsonNode idNode = raiz.path("id");
@@ -123,7 +122,6 @@ public class TmdbAPI {
     }
 
     public List<ImagemFilmeDTO> buscarImagensFilme(String parametros, Long id) {
-        System.out.println(parametros);
         String comentariosString = client.get()
                 .uri("/movie/" + id + "/images" + parametros)
                 .retrieve()
@@ -134,7 +132,6 @@ public class TmdbAPI {
 
     private List<ImagemFilmeDTO> extrairImagensFilme(String comentariosString) {
         try {
-            System.out.println(comentariosString);
             JsonNode raiz = json.readTree(comentariosString);
             JsonNode resultadosArray = raiz.path("backdrops");
 

@@ -40,12 +40,21 @@
       @if (tipo() === "filmePage") {
       <div class="acoes flex flex-row gap-2 mt-4">
         <div class="tooltip" data-tip="Curtir">
-          <button class="btn btn-soft btn-secondary">
-            <lucide-angular name="heart"></lucide-angular>
+          <button
+            class="btn btn-secondary"
+            [class.btn-soft]="!curtiu"
+            (click)="curtirFilme()"
+          >
+            <lucide-angular
+              [name]="curtiu ? 'heart-off' : 'heart'"
+            ></lucide-angular>
           </button>
         </div>
         <div class="tooltip" data-tip="Adicionar à lista">
-          <button class="btn btn-soft btn-accent">
+          <button
+            class="btn btn-soft btn-accent"
+            (click)="buscarExistenciaCurtida()"
+          >
             <lucide-angular name="clock-plus"></lucide-angular>
           </button>
         </div>

@@ -44,8 +44,6 @@ export class FilmePage {
         this.filme = filme;
         this.comentarios = comentarios.resultados;
         this.imagens = imagens;
-        console.log('Imagens do filme:', this.imagens);
-        console.log('Filme:', filme);
       });
   }
 

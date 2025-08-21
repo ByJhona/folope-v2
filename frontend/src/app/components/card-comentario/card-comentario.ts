@@ -11,11 +11,6 @@ export class CardComentario {
   comentario = input.required<Comentario>();
   comentarioRecolhido = signal(true);
 
-  ngOnInit() {
-    console.log('Comentario:', this.comentario().id);
-    console.log('Comentario:', this.comentario());
-  }
-
   alterarEstadoComentario() {
     this.comentarioRecolhido.update((recolhido) => !recolhido);
   }

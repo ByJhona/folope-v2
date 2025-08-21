@@ -27,7 +27,11 @@ export const appConfig: ApplicationConfig = {
         ui_locales: 'pt-BR en',
       },
       httpInterceptor: {
-        allowedList: [`${env.api.serverUrl}/api/privado`],
+        allowedList: [
+          `${env.api.serverUrl}/api/privado`,
+          `${env.api.serverUrl}/curtidas/existe`,
+          `${env.api.serverUrl}/curtidas`,
+        ],
       },
     }),
     provideHttpClient(withFetch(), withInterceptors([authHttpInterceptorFn])),

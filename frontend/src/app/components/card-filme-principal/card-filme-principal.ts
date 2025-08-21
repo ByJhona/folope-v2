@@ -4,6 +4,8 @@ import { Rating } from '../rating/rating';
 import { LucideAngularModule } from 'lucide-angular';
 import { TipoCardFilmePrincipal } from '../../types/TipoCardFilmePrincipal';
 import { Router } from '@angular/router';
+import { ApiFolope } from '../../services/api-folope';
+import { CurtidaAlvoEnum } from '../../types/Curtida';
 @Component({
   selector: 'folope-card-filme-principal',
   imports: [Rating, LucideAngularModule],
@@ -12,16 +14,26 @@ import { Router } from '@angular/router';
 })
 export class CardFilmePrincipal {
   router = inject(Router);
+  curtidasServ = inject(ApiFolope);
   filme = input.required<FilmeResumo>();
   tipo = input.required<TipoCardFilmePrincipal>();
-
-  ngOnInit() {
-    console.log('Filme Principal:', this.filme()?.id);
-    console.log('Filme Principal:', this.filme());
-  }
+  curtiu = false;
 
   buscarDetalhesFilme() {
     this.router.navigate(['/filme', this.filme()?.id]);
-    console.log('Buscar detalhes do filme:', this.filme()?.id);
+  }
+
+  curtirFilme() {
+    this.curtidasServ
+      .salvarCurtida(this.filme().id, CurtidaAlvoEnum.FILME)
+      .subscribe((curtida) => {});
+  }
+
+  buscarExistenciaCurtida() {
+    this.curtidasServ
+      .buscarExistenciaCurtida(this.filme().id, CurtidaAlvoEnum.FILME)
+      .subscribe((existe) => {
+        this.curtiu = existe;
+      });
   }
 }

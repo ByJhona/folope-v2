@@ -15,6 +15,5 @@ export class CardInfo {
 
   buscarDetalhesFilme() {
     this.router.navigate(['/filme', this.filme().id]);
-    console.log('Buscar detalhes do filme:', this.filme().id);
   }
 }
