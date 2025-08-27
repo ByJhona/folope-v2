@@ -5,9 +5,10 @@ import { LucideAngularModule } from 'lucide-angular';
 import { TipoCardFilmePrincipal } from '../../types/TipoCardFilmePrincipal';
 import { Router } from '@angular/router';
 import { ApiFolope } from '../../services/api-folope';
+import { SkeletonCardFilmePrincipal } from '../skeleton-card-filme-principal/skeleton-card-filme-principal';
 @Component({
   selector: 'folope-card-filme-principal',
-  imports: [Rating, LucideAngularModule],
+  imports: [Rating, LucideAngularModule, SkeletonCardFilmePrincipal],
   templateUrl: './card-filme-principal.html',
   styleUrl: './card-filme-principal.scss',
 })

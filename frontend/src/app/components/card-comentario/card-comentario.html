@@ -3,7 +3,9 @@
   <div class="chat-image avatar">
     <div class="w-10 rounded-full">
       <img
-        alt="Tailwind CSS chat bubble component"
+        alt="Foto de perfil do usuário {{
+          comentario().detalhes_autor.nomeUsuario
+        }}"
         [src]="comentario().detalhes_autor.fotoUsuario"
       />
     </div>
@@ -30,5 +32,4 @@
 
 }@else {
 <p>Comentário não encontrado</p>
-
 }

@@ -10,7 +10,7 @@ import { CardFilmePrincipal } from '../../components/card-filme-principal/card-f
 import { FilmeResumo } from '../../types/FilmeResumo';
 import { ApiFolope } from '../../services/api-folope';
 import { ActivatedRoute } from '@angular/router';
-import { EMPTY, forkJoin, of, switchMap } from 'rxjs';
+import { forkJoin, switchMap } from 'rxjs';
 import { CardComentario } from '../../components/card-comentario/card-comentario';
 import { Comentario } from '../../types/Comentario';
 import { ImagemFilme } from '../../types/ImagemFilme';

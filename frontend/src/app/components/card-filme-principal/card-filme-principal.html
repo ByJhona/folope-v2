@@ -1,3 +1,4 @@
+@if(filme()){
 <div
   class="relative hero bg-cover bg-center"
   [style.background-image]="'url(' + filme()?.urlCapaFundo + ')'"
@@ -15,11 +16,13 @@
   <div class="hero-overlay"></div>
 
   <div class="hero-content flex-col lg:flex-row relative z-10">
-    <img
-      [src]="filme()?.urlCapaPoster"
-      class="max-w-sm rounded-lg shadow-2xl"
-      [alt]="'Pôster do filme ' + filme()?.titulo"
-    />
+    <div class="poster">
+      <img
+        [src]="filme()?.urlCapaPoster"
+        class="max-w-sm rounded-lg shadow-2xl"
+        [alt]="'Pôster do filme ' + filme()?.titulo"
+      />
+    </div>
 
     <div class="ml-12">
       <button
@@ -38,6 +41,7 @@
           [nota]="filme()?.nota || 0"
         ></folope-rating>
         <span>|</span>
+
         <span>{{ filme()?.dataLancamento }}</span>
       </div>
       @if (tipo() === "filmePage") {
@@ -66,7 +70,12 @@
       <p class="py-6 text-base-content">
         {{ filme()?.sinopse }}
       </p>
+
       <button class="btn btn-primary">Assistir ao trailer</button>
     </div>
   </div>
 </div>
+
+}@else {
+<folope-skeleton-card-filme-principal [tipo]="tipo()" />
+}
