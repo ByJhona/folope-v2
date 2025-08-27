@@ -1,10 +1,10 @@
 <div class="container-filme-page flex flex-col">
-  @if (filme !== undefined) {
   <folope-card-filme-principal
-    [filme]="filme"
+    [filme]="filme()"
     tipo="filmePage"
+    [curtido]="curtiu()"
+    (curtiu)="curtirFilme($event)"
   ></folope-card-filme-principal>
-  }
 
   <div class="container self-center flex flex-col gap-11 mt-8">
     <div class="fotografias flex flex-col">

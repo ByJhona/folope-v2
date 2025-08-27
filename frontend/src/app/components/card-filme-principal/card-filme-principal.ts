@@ -1,11 +1,10 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FilmeResumo } from '../../types/FilmeResumo';
 import { Rating } from '../rating/rating';
 import { LucideAngularModule } from 'lucide-angular';
 import { TipoCardFilmePrincipal } from '../../types/TipoCardFilmePrincipal';
 import { Router } from '@angular/router';
 import { ApiFolope } from '../../services/api-folope';
-import { CurtidaAlvoEnum } from '../../types/Curtida';
 @Component({
   selector: 'folope-card-filme-principal',
   imports: [Rating, LucideAngularModule],
@@ -15,25 +14,16 @@ import { CurtidaAlvoEnum } from '../../types/Curtida';
 export class CardFilmePrincipal {
   router = inject(Router);
   curtidasServ = inject(ApiFolope);
-  filme = input.required<FilmeResumo>();
+  filme = input.required<FilmeResumo | undefined>();
   tipo = input.required<TipoCardFilmePrincipal>();
-  curtiu = false;
+  curtido = input<boolean>(false);
+  curtiu = output<boolean>();
 
   buscarDetalhesFilme() {
     this.router.navigate(['/filme', this.filme()?.id]);
   }
 
-  curtirFilme() {
-    this.curtidasServ
-      .salvarCurtida(this.filme().id, CurtidaAlvoEnum.FILME)
-      .subscribe((curtida) => {});
-  }
-
-  buscarExistenciaCurtida() {
-    this.curtidasServ
-      .buscarExistenciaCurtida(this.filme().id, CurtidaAlvoEnum.FILME)
-      .subscribe((existe) => {
-        this.curtiu = existe;
-      });
+  alterarEstadoCurtida(curtido: boolean) {
+    this.curtiu.emit(curtido);
   }
 }

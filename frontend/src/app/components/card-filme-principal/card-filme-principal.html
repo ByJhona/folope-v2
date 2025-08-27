@@ -1,6 +1,6 @@
 <div
   class="relative hero bg-cover bg-center"
-  [style.background-image]="'url(' + filme().urlCapaFundo + ')'"
+  [style.background-image]="'url(' + filme()?.urlCapaFundo + ')'"
 >
   <div
     class="absolute inset-0"
@@ -16,9 +16,9 @@
 
   <div class="hero-content flex-col lg:flex-row relative z-10">
     <img
-      [src]="filme().urlCapaPoster"
+      [src]="filme()?.urlCapaPoster"
       class="max-w-sm rounded-lg shadow-2xl"
-      [alt]="'Pôster do filme ' + filme().titulo"
+      [alt]="'Pôster do filme ' + filme()?.titulo"
     />
 
     <div class="ml-12">
@@ -28,40 +28,43 @@
         [class.disabled]="tipo() === 'filmePage'"
       >
         <h1 class="text-5xl font-bold text-base-content">
-          {{ filme().titulo }}
+          {{ filme()?.titulo }}
         </h1>
       </button>
 
       <div class="informacoes-filme flex flex-direction-row items-center gap-4">
-        <folope-rating [id]="filme().id" [nota]="filme().nota"></folope-rating>
+        <folope-rating
+          [id]="filme()?.id || 0"
+          [nota]="filme()?.nota || 0"
+        ></folope-rating>
         <span>|</span>
-        <span>{{ filme().dataLancamento }}</span>
+        <span>{{ filme()?.dataLancamento }}</span>
       </div>
       @if (tipo() === "filmePage") {
       <div class="acoes flex flex-row gap-2 mt-4">
-        <div class="tooltip" data-tip="Curtir">
+        <div
+          class="tooltip"
+          [attr.data-tip]="curtido() ? 'Descurtir' : 'Curtir'"
+        >
           <button
             class="btn btn-secondary"
-            [class.btn-soft]="!curtiu"
-            (click)="curtirFilme()"
+            [class.btn-soft]="!curtido()"
+            (click)="alterarEstadoCurtida(!this.curtido())"
           >
             <lucide-angular
-              [name]="curtiu ? 'heart-off' : 'heart'"
+              [name]="curtido() ? 'heart-off' : 'heart'"
             ></lucide-angular>
           </button>
         </div>
-        <div class="tooltip" data-tip="Adicionar à lista">
-          <button
-            class="btn btn-soft btn-accent"
-            (click)="buscarExistenciaCurtida()"
-          >
+        <div class="tooltip" data-tip="Adicionar à lista de desejos">
+          <button class="btn btn-soft btn-accent">
             <lucide-angular name="clock-plus"></lucide-angular>
           </button>
         </div>
       </div>
       }
       <p class="py-6 text-base-content">
-        {{ filme().sinopse }}
+        {{ filme()?.sinopse }}
       </p>
       <button class="btn btn-primary">Assistir ao trailer</button>
     </div>

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -23,11 +25,14 @@ public class Curtida {
     @Column(name = "alvo")
     @Enumerated(EnumType.STRING)
     private AlvoCurtidaEnum alvo;
+    @Column(name = "data")
+    private Instant data;
 
 
     public Curtida(CurtidaDTO dto, String idUsuario) {
         this.idAlvo = dto.idAlvo();
         this.idUsuario = idUsuario;
         this.alvo = dto.alvo();
+        this.data = Instant.now();
     }
 }

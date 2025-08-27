@@ -73,12 +73,18 @@ export class ApiFolope {
     });
   }
 
+  removerCurtida(idAlvo: number, alvo: CurtidaAlvoEnum): Observable<void> {
+    return this.httpClient.delete<void>(
+      this.apiUrl + '/curtidas' + '?idAlvo=' + idAlvo + '&alvo=' + alvo
+    );
+  }
+
   buscarExistenciaCurtida(
     idAlvo: number,
     alvo: CurtidaAlvoEnum
   ): Observable<boolean> {
     return this.httpClient.get<boolean>(
-      this.apiUrl + '/curtidas/existe?' + 'idAlvo=' + idAlvo + '&alvo=' + alvo
+      this.apiUrl + '/curtidas/existe' + '?idAlvo=' + idAlvo + '&alvo=' + alvo
     );
   }
 }

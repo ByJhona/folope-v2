@@ -3,6 +3,7 @@ package br.byjhona.folope.controller;
 import br.byjhona.folope.domain.curtida.AlvoCurtidaEnum;
 import br.byjhona.folope.domain.curtida.CurtidaDTO;
 import br.byjhona.folope.service.CurtidaService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,6 +29,14 @@ public class CurtidaController {
         // TODO Arrumar a uri para que ela represente um endereço real
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(curtida.id()).toUri();
         return ResponseEntity.created(uri).body(curtida);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> descurtir(@RequestParam Long idAlvo, @RequestParam AlvoCurtidaEnum alvo, @AuthenticationPrincipal Jwt jwt) {
+        System.out.println(alvo);
+        String idUsuario = jwt.getSubject();
+        this.curtidaServ.deletarCurtidaBD(idUsuario, idAlvo, alvo);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
