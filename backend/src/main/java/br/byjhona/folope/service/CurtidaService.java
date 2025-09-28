@@ -42,7 +42,7 @@ public class CurtidaService {
 
 
     private CurtidaDTO converterCurtidaParaDTO(Curtida curtida) {
-        return new CurtidaDTO(curtida.getId(), curtida.getIdAlvo(), curtida.getAlvo());
+        return new CurtidaDTO(curtida.getId(), curtida.getIdAlvo(), curtida.getAlvo(), curtida.getData());
     }
 
     @Transactional

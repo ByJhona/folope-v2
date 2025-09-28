@@ -22,6 +22,21 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
+        <createTable tableName="desejo">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_usuario" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_filme" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 
 </databaseChangeLog>

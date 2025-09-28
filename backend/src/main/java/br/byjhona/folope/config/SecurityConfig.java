@@ -18,6 +18,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/filme/**").permitAll()
                         .requestMatchers("/curtidas/**").authenticated()
+                        .requestMatchers("/desejos/**").authenticated()
                         .requestMatchers("/api/publico").permitAll()
                         .requestMatchers("/api/privado").authenticated()
                         .requestMatchers("/api/private-scoped").hasAuthority("SCOPE_read:messages")
