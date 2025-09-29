@@ -12,29 +12,10 @@ import {
   withFetch,
   withInterceptors,
 } from '@angular/common/http';
-import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
-import { environment as env } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAuth0({
-      domain: env.auth0.domain,
-      clientId: env.auth0.clientId,
-      authorizationParams: {
-        audience: env.auth0.authorizationParams.audience,
-        redirect_uri: 'http://localhost:4200',
-      },
-      httpInterceptor: {
-        allowedList: [
-          `${env.api.serverUrl}/api/privado`,
-          `${env.api.serverUrl}/curtidas/existe`,
-          `${env.api.serverUrl}/curtidas`,
-          `${env.api.serverUrl}/desejos`,
-          `${env.api.serverUrl}/desejos/existe`,
-        ],
-      },
-    }),
-    provideHttpClient(withFetch(), withInterceptors([authHttpInterceptorFn])),
+    provideHttpClient(withFetch(), withInterceptors([])),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,
