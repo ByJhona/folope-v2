@@ -22,15 +22,15 @@ export const appConfig: ApplicationConfig = {
       clientId: env.auth0.clientId,
       authorizationParams: {
         audience: env.auth0.authorizationParams.audience,
-        redirect_uri: window.location.origin,
-        prompt: 'login',
-        ui_locales: 'pt-BR en',
+        redirect_uri: 'http://localhost:4200',
       },
       httpInterceptor: {
         allowedList: [
           `${env.api.serverUrl}/api/privado`,
           `${env.api.serverUrl}/curtidas/existe`,
           `${env.api.serverUrl}/curtidas`,
+          `${env.api.serverUrl}/desejos`,
+          `${env.api.serverUrl}/desejos/existe`,
         ],
       },
     }),

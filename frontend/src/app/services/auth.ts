@@ -14,8 +14,7 @@ export class Auth {
   logout() {
     this._auth.logout({
       logoutParams: {
-        federated: true,
-        returnTo: window.location.origin,
+        returnTo: 'http://localhost:4200/callback',
       },
     });
   }

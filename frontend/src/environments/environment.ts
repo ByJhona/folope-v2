@@ -5,7 +5,7 @@ export const environment = {
     clientId: 'G5ka8m7wk3vS3LzM0UnwLYVHqbPWXeDr',
     authorizationParams: {
       audience: 'http://localhost:8080/',
-      redirect_uri: 'http://localhost:8080/callback',
+      redirect_uri: 'http://localhost:4200',
     },
     errorPath: '/callback',
   },

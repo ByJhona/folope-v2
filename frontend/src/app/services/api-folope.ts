@@ -8,6 +8,7 @@ import { FilmeResumo } from '../types/FilmeResumo';
 import { Comentario } from '../types/Comentario';
 import { ImagemFilme } from '../types/ImagemFilme';
 import { CurtidaAlvoEnum, Curtida } from '../types/Curtida';
+import { Desejo } from '../types/Desejo';
 
 @Injectable({
   providedIn: 'root',
@@ -66,17 +67,32 @@ export class ApiFolope {
     );
   }
 
-  salvarCurtida(idAlvo: number, alvo: CurtidaAlvoEnum): Observable<Curtida> {
-    return this.httpClient.post<Curtida>(this.apiUrl + '/curtidas', {
-      idAlvo,
-      alvo,
+  salvarDesejo(idFilme: number): Observable<Desejo> {
+    return this.httpClient.post<Desejo>(this.apiUrl + '/desejos', {
+      idFilme,
     });
+  }
+  removerDesejo(idFilme: number): Observable<void> {
+    return this.httpClient.delete<void>(
+      this.apiUrl + '/desejos' + '?idFilme=' + idFilme
+    );
+  }
+  buscarExistenciaDesejo(idFilme: number): Observable<boolean> {
+    return this.httpClient.get<boolean>(
+      this.apiUrl + '/desejos/existe' + '?idFilme=' + idFilme
+    );
   }
 
   removerCurtida(idAlvo: number, alvo: CurtidaAlvoEnum): Observable<void> {
     return this.httpClient.delete<void>(
       this.apiUrl + '/curtidas' + '?idAlvo=' + idAlvo + '&alvo=' + alvo
     );
+  }
+  salvarCurtida(idAlvo: number, alvo: CurtidaAlvoEnum): Observable<Curtida> {
+    return this.httpClient.post<Curtida>(this.apiUrl + '/curtidas', {
+      idAlvo,
+      alvo,
+    });
   }
 
   buscarExistenciaCurtida(

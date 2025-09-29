@@ -29,6 +29,8 @@ export class FilmePage {
   comentarios!: Comentario[];
   imagens!: ImagemFilme[];
   curtiu = signal<boolean>(false);
+  desejou = signal<boolean>(false);
+
   @ViewChildren('carouselItem') itensCarrosselImagens!: QueryList<ElementRef>;
 
   constructor() {
@@ -41,21 +43,21 @@ export class FilmePage {
             comentarios: this.api.pesquisarComentariosFilmeId(id),
             imagens: this.api.pesquisarImagensFilmeId(id),
             curtiu: this.api.buscarExistenciaCurtida(id, CurtidaAlvoEnum.FILME),
+            desejou: this.api.buscarExistenciaDesejo(id),
           });
         })
       )
-      .subscribe(({ filme, comentarios, imagens, curtiu }) => {
-        this.filme.set(filme);
+      .subscribe(({ filme, comentarios, imagens, curtiu, desejou }) => {
         this.comentarios = comentarios.resultados;
+        this.filme.set(filme);
         this.imagens = imagens;
         this.curtiu.set(curtiu);
-        console.log('Curtiu:', this.curtiu());
+        this.desejou.set(desejou);
       });
   }
 
   curtirFilme(curtiu: boolean): void {
     const idFilme = this.filme()?.id;
-    console.log('Curtiu (método):', curtiu);
 
     if (idFilme !== undefined && curtiu) {
       this.api.salvarCurtida(idFilme, CurtidaAlvoEnum.FILME).subscribe(() => {
@@ -68,13 +70,17 @@ export class FilmePage {
     }
   }
 
-  buscarExistenciaCurtida() {
+  desejarFilme(desejou: boolean): void {
     const idFilme = this.filme()?.id;
 
-    if (idFilme !== undefined) {
-      this.api
-        .buscarExistenciaCurtida(idFilme, CurtidaAlvoEnum.FILME)
-        .subscribe((existe) => {});
+    if (idFilme !== undefined && desejou) {
+      this.api.salvarDesejo(idFilme).subscribe(() => {
+        this.desejou.set(true);
+      });
+    } else if (idFilme !== undefined && !desejou) {
+      this.api.removerDesejo(idFilme).subscribe(() => {
+        this.desejou.set(false);
+      });
     }
   }
 

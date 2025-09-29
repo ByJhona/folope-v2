@@ -60,9 +60,23 @@
             ></lucide-angular>
           </button>
         </div>
-        <div class="tooltip" data-tip="Adicionar à lista de desejos">
-          <button class="btn btn-soft btn-accent">
-            <lucide-angular name="clock-plus"></lucide-angular>
+
+        <div
+          class="tooltip"
+          [attr.data-tip]="
+            desejado()
+              ? 'Remover da lista de desejos'
+              : 'Adicionar à lista de desejos'
+          "
+        >
+          <button
+            class="btn btn-accent"
+            [class.btn-soft]="!desejado()"
+            (click)="alterarEstadoDesejo(!this.desejado())"
+          >
+            <lucide-angular
+              [name]="desejado() ? 'clock-fading' : 'clock-plus'"
+            ></lucide-angular>
           </button>
         </div>
       </div>
