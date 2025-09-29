@@ -37,6 +37,18 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
+        <createTable tableName="usuario">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="apelido" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="senha" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 
 </databaseChangeLog>

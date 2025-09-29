@@ -31,7 +31,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
 
         FiltroAutenticacao filtroAutenticacao = new FiltroAutenticacao(jwtService);
-        filtroAutenticacao.setFilterProcessesUrl("/login");
+        filtroAutenticacao.setFilterProcessesUrl("/usuario/login");
         filtroAutenticacao.setAuthenticationManager(authenticationManager);
 
 
@@ -41,7 +41,8 @@ public class SecurityConfig {
                 .cors(cors -> {
                 })
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("usuario/login").permitAll()
+                        .requestMatchers("usuario/cadastrar").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilter(filtroAutenticacao)

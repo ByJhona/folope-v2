@@ -1,6 +1,6 @@
 package br.byjhona.folope.autenticacao;
 
-import br.byjhona.folope.domain.autenticacao.LoginDTO;
+import br.byjhona.folope.domain.usuario.UsuarioLoginDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -27,11 +27,12 @@ public class FiltroAutenticacao extends UsernamePasswordAuthenticationFilter {
                                                 HttpServletResponse response) throws AuthenticationException {
 
         try {
-            LoginDTO dto = new ObjectMapper()
-                    .readValue(request.getInputStream(), LoginDTO.class);
+            UsuarioLoginDTO dto = new ObjectMapper()
+                    .readValue(request.getInputStream(), UsuarioLoginDTO.class);
+
 
             UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(dto.nome(), dto.senha());
+                    new UsernamePasswordAuthenticationToken(dto.apelido(), dto.senha());
             return getAuthenticationManager().authenticate(authToken);
         } catch (IOException e) {
             throw new AuthenticationServiceException("Erro ao ler o corpo da requisição", e);
