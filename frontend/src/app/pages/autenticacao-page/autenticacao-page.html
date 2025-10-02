@@ -1,0 +1,36 @@
+<div class="hero bg-base-200 min-h-screen">
+  <div class="hero-content flex-col lg:flex-row-reverse">
+    <div class="text-center lg:text-left">
+      <h1 class="text-5xl font-bold">Você x Seu Amigo</h1>
+      <p class="py-6">
+        Quem é mais provável de...? ASSISTIR um filme de terror sozinho?
+      </p>
+    </div>
+    <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+      <div class="card-body">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <fieldset class="fieldset">
+            <label class="label">Apelido</label>
+            <input
+              [formControl]="obterControleFormulario('apelido')"
+              type="email"
+              class="input"
+              placeholder="Diga quem é você..."
+            />
+          </fieldset>
+          <fieldset class="fieldset mt-4">
+            <label class="label">Senha</label>
+            <input
+              [formControl]="obterControleFormulario('senha')"
+              type="password"
+              class="input"
+              placeholder="Digite a senha, se é que você lembra..."
+            />
+            <div><a class="link link-hover">ixi! Esqueci a senha.</a></div>
+            <button class="btn btn-neutral mt-4" type="submit">Entrar</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

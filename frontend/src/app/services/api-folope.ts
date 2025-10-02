@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Paginacao } from '../types/Paginacao';
 import { Observable } from 'rxjs';
 import { Filme } from '../types/Filme';
@@ -15,7 +15,7 @@ import { Desejo } from '../types/Desejo';
 })
 export class ApiFolope {
   private readonly apiUrl: string = `${env.api.serverUrl}`;
-  constructor(private readonly httpClient: HttpClient) {}
+  private readonly httpClient = inject(HttpClient);
 
   publico(): Observable<string> {
     return this.httpClient.get<string>(this.apiUrl + '/api' + '/publico');

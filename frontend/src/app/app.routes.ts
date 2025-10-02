@@ -9,6 +9,14 @@ export const routes: Routes = [
     title: 'Folope - Home',
   },
   {
+    path: 'autenticacao',
+    loadComponent: () =>
+      import('./pages/autenticacao-page/autenticacao-page').then(
+        (m) => m.AutenticacaoPage
+      ),
+    title: 'Folope - Login',
+  },
+  {
     path: 'filme/:id',
     loadComponent: () =>
       import('./pages/filme-page/filme-page').then((m) => m.FilmePage),

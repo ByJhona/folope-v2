@@ -20,28 +20,28 @@ public class FilmeDesejadoController {
 
     @PostMapping
     public ResponseEntity<FilmeDesejadoDTO> adicionarWatchList(@RequestBody FilmeDesejadoDTO dto, @AuthenticationPrincipal Jwt jwt) {
-        String idUsuario = jwt.getSubject();
+        String idUsuario = "12345";
         FilmeDesejadoDTO filmeDesejadoDTO = this.filmeDesejadoServ.salvarFilmeDesejadoBD(dto, idUsuario);
         return ResponseEntity.ok().body(filmeDesejadoDTO);
     }
 
     @DeleteMapping
     public ResponseEntity<HttpStatus> removerWatchList(@RequestParam Long idFilme, @AuthenticationPrincipal Jwt jwt) {
-        String idUsuario = jwt.getSubject();
+        String idUsuario = "12345";
         this.filmeDesejadoServ.deletarFilmeDesejadoBD(idUsuario, idFilme);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping
     public ResponseEntity<FilmeDesejadoDTO> buscarFilmeDesejado(@RequestParam Long idFilme, @AuthenticationPrincipal Jwt jwt) {
-        String idUsuario = jwt.getSubject();
+        String idUsuario = "12345";
         FilmeDesejadoDTO filmeDesejadoDTO = this.filmeDesejadoServ.buscarFilmeDesejadoBD(idUsuario, idFilme);
         return ResponseEntity.ok().body(filmeDesejadoDTO);
     }
 
     @GetMapping("/existe")
     public ResponseEntity<Boolean> buscarExistenciaFilmeDesejado(@RequestParam Long idFilme, @AuthenticationPrincipal Jwt jwt) {
-        String idUsuario = jwt.getSubject();
+        String idUsuario = "12345";
         Boolean existe = this.filmeDesejadoServ.buscarExistenciaFilmeDesejadoBD(idUsuario, idFilme);
         return ResponseEntity.ok().body(existe);
     }

@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("usuario/login").permitAll()
                         .requestMatchers("usuario/cadastrar").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .addFilter(filtroAutenticacao)
                 .addFilterAfter(filtroAutorizacao, FiltroAutenticacao.class);

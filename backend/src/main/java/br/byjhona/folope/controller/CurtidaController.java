@@ -24,7 +24,7 @@ public class CurtidaController {
 
     @PostMapping
     public ResponseEntity<CurtidaDTO> curtir(@RequestBody CurtidaDTO curtidaDTO, @AuthenticationPrincipal Jwt jwt) {
-        String idUsuario = jwt.getSubject();
+        String idUsuario = "12345";
         CurtidaDTO curtida = this.curtidaServ.salvarCurtidaBD(curtidaDTO, idUsuario);
         // TODO Arrumar a uri para que ela represente um endereço real
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(curtida.id()).toUri();
@@ -32,23 +32,22 @@ public class CurtidaController {
     }
 
     @DeleteMapping
-    public ResponseEntity<HttpStatus> descurtir(@RequestParam Long idAlvo, @RequestParam AlvoCurtidaEnum alvo, @AuthenticationPrincipal Jwt jwt) {
-        System.out.println(alvo);
-        String idUsuario = jwt.getSubject();
+    public ResponseEntity<HttpStatus> descurtir(@RequestParam Long idAlvo, @RequestParam AlvoCurtidaEnum alvo) {
+        String idUsuario = "12345";
         this.curtidaServ.deletarCurtidaBD(idUsuario, idAlvo, alvo);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping
     public ResponseEntity<CurtidaDTO> buscarCurtida(@RequestParam Long idAlvo, @RequestParam AlvoCurtidaEnum alvo, @AuthenticationPrincipal Jwt jwt) {
-        String idUsuario = jwt.getSubject();
+        String idUsuario = "12345";
         CurtidaDTO curtidaDTO = this.curtidaServ.buscarCurtidaBD(idUsuario, idAlvo, alvo);
         return ResponseEntity.ok().body(curtidaDTO);
     }
 
     @GetMapping("/existe")
     public ResponseEntity<Boolean> buscarExistenciaCurtida(@RequestParam Long idAlvo, @RequestParam AlvoCurtidaEnum alvo, @AuthenticationPrincipal Jwt jwt) {
-        String idUsuario = jwt.getSubject();
+        String idUsuario = "12345";
         Boolean existe = this.curtidaServ.buscarExistenciaCurtidaBD(idUsuario, idAlvo, alvo);
         return ResponseEntity.ok().body(existe);
     }

@@ -1,29 +1,21 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Usuario } from './../../types/Usuario';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
-import { Auth } from '../../services/auth';
-import { User } from '@auth0/auth0-angular';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'folope-navbar',
-  imports: [ReactiveFormsModule, LucideAngularModule, AsyncPipe, RouterLink],
+  imports: [ReactiveFormsModule, LucideAngularModule, RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
 export class Navbar {
-  usuario = signal<User | undefined | null>(undefined);
+  private readonly rota = inject(Router);
+  usuario = signal<Usuario | undefined | null>(undefined);
   pesquisa = new FormControl('');
-  constructor(public auth: Auth) {
-    auth.obterUsuarioAutenticado().subscribe((usuario) => {
-      this.usuario.set(usuario);
-    });
-  }
+
   login() {
-    this.auth.login();
-  }
-  logout() {
-    this.auth.logout();
+    this.rota.navigate(['/autenticacao']);
   }
 }
