@@ -6,8 +6,6 @@ import br.byjhona.folope.service.CurtidaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -23,7 +21,7 @@ public class CurtidaController {
     }
 
     @PostMapping
-    public ResponseEntity<CurtidaDTO> curtir(@RequestBody CurtidaDTO curtidaDTO, @AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<CurtidaDTO> curtir(@RequestBody CurtidaDTO curtidaDTO) {
         String idUsuario = "12345";
         CurtidaDTO curtida = this.curtidaServ.salvarCurtidaBD(curtidaDTO, idUsuario);
         // TODO Arrumar a uri para que ela represente um endereço real
@@ -39,14 +37,14 @@ public class CurtidaController {
     }
 
     @GetMapping
-    public ResponseEntity<CurtidaDTO> buscarCurtida(@RequestParam Long idAlvo, @RequestParam AlvoCurtidaEnum alvo, @AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<CurtidaDTO> buscarCurtida(@RequestParam Long idAlvo, @RequestParam AlvoCurtidaEnum alvo) {
         String idUsuario = "12345";
         CurtidaDTO curtidaDTO = this.curtidaServ.buscarCurtidaBD(idUsuario, idAlvo, alvo);
         return ResponseEntity.ok().body(curtidaDTO);
     }
 
     @GetMapping("/existe")
-    public ResponseEntity<Boolean> buscarExistenciaCurtida(@RequestParam Long idAlvo, @RequestParam AlvoCurtidaEnum alvo, @AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<Boolean> buscarExistenciaCurtida(@RequestParam Long idAlvo, @RequestParam AlvoCurtidaEnum alvo) {
         String idUsuario = "12345";
         Boolean existe = this.curtidaServ.buscarExistenciaCurtidaBD(idUsuario, idAlvo, alvo);
         return ResponseEntity.ok().body(existe);

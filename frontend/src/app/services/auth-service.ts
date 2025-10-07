@@ -16,4 +16,13 @@ export class AuthService {
       { observe: 'response' }
     );
   }
+
+  salvarToken(token: string | null): void {
+    if (!token) return;
+    const tokenLimpo = token.replace('Bearer ', '');
+    localStorage.setItem('token', tokenLimpo);
+  }
+  obterToken(): string {
+    return localStorage.getItem('token') ?? '';
+  }
 }

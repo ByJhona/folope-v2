@@ -33,10 +33,10 @@ export class AutenticacaoPage {
       .login(this.loginForm.value.apelido!, this.loginForm.value.senha!)
       .subscribe({
         next: (response: any) => {
-          console.log('Login bem-sucedido:', response);
+          console.log('Login bem-sucedido:');
         },
         error: (error: any) => {
-          console.error('Erro no login:', error);
+          console.error('Erro no login:');
         },
       });
   }

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'folope-rating',
@@ -6,7 +6,7 @@ import { Component, input } from '@angular/core';
   templateUrl: './rating.html',
   styleUrl: './rating.scss',
 })
-export class Rating {
+export class Rating implements OnInit {
   id = input.required<number>();
   nota = input.required<number>();
   estrelas = [false, false, false, false, false, false, false, false, false];
