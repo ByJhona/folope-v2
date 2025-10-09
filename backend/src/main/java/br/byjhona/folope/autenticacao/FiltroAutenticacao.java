@@ -4,6 +4,7 @@ import br.byjhona.folope.domain.usuario.UsuarioLoginDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -45,7 +46,9 @@ public class FiltroAutenticacao extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         String username = authResult.getName();
-        String token = jwtService.gerarToken(username);
+        String token = jwtService.gerarToken(username, "access", 1);
+        Cookie cookie = jwtService.gerarCookieRefreshToken(username);
+        response.addCookie(cookie);
 
         response.addHeader("Authorization", "Bearer " + token);
     }
