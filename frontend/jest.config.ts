@@ -3,5 +3,6 @@ import { createCjsPreset } from 'jest-preset-angular/presets';
 
 export default {
   ...createCjsPreset(),
-  setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
+  testMatch: ['<rootDir>/src/**/*.spec.ts'],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
 } satisfies Config;
