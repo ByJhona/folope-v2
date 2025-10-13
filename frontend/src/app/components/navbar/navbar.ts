@@ -22,6 +22,9 @@ export class Navbar {
   login() {
     this.authServ.login();
   }
+  cadastrar() {
+    this.rota.navigate(['/cadastrar']);
+  }
   logout() {
     this.authServ.logout();
   }

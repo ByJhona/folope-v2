@@ -10,11 +10,9 @@ export const routes: Routes = [
   },
 
   {
-    path: 'autenticacao',
+    path: 'cadastrar',
     loadComponent: () =>
-      import('./pages/autenticacao-page/autenticacao-page').then(
-        (m) => m.AutenticacaoPage
-      ),
+      import('./pages/cadastro-page/cadastro-page').then((m) => m.CadastroPage),
     title: 'Folope - Login',
   },
   {

@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { environment as env } from '../../environments/environment';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authConfig } from '../config/auth.config';
+import { CadastroUsuarioInterface } from '../types/CadastroUsuarioInterface';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +30,14 @@ export class AuthService {
     }
     this.oauthServ.initCodeFlow();
   }
+
+  cadastrar(usuario: CadastroUsuarioInterface): Observable<any> {
+    return this.http.post<any>(
+      `${this.apiUrl}/autenticacao/cadastrar`,
+      usuario
+    );
+  }
+
   logout(): void {
     this.oauthServ.logOut();
   }

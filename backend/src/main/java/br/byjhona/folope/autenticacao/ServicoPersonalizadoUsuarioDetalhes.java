@@ -1,6 +1,6 @@
 package br.byjhona.folope.autenticacao;
 
-import br.byjhona.folope.repository.UsuarioRepository;
+import br.byjhona.folope.repository.AutenticacaoRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ServicoPersonalizadoUsuarioDetalhes implements UserDetailsService {
-    private final UsuarioRepository usuarioRepo;
+    private final AutenticacaoRepository usuarioRepo;
 
-    public ServicoPersonalizadoUsuarioDetalhes(UsuarioRepository usuarioRepo) {
+    public ServicoPersonalizadoUsuarioDetalhes(AutenticacaoRepository usuarioRepo) {
         this.usuarioRepo = usuarioRepo;
     }
 

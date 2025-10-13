@@ -94,6 +94,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/filme/**").permitAll()
+                        .requestMatchers("/autenticacao/cadastrar").permitAll()
                         .requestMatchers("/usuario/cadastrar").permitAll()
                         .anyRequest().authenticated()
                 )

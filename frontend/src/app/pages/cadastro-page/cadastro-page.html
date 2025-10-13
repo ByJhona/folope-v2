@@ -1,17 +1,18 @@
 <div class="hero bg-base-200 min-h-screen">
   <div class="hero-content flex-col lg:flex-row-reverse">
     <div class="text-center lg:text-left">
-      <h1 class="text-5xl font-bold">Você x Seu Amigo</h1>
+      <h1 class="text-5xl font-bold">Cadastrar</h1>
       <p class="py-6">
         Quem é mais provável de...? ASSISTIR um filme de terror sozinho?
       </p>
     </div>
     <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
       <div class="card-body">
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <form [formGroup]="cadastroForm" (ngSubmit)="cadastrar()">
           <fieldset class="fieldset">
-            <label class="label">Apelido</label>
+            <label class="label" for="apelidoInput">Apelido</label>
             <input
+              id="apelidoInput"
               [formControl]="obterControleFormulario('apelido')"
               type="email"
               class="input"
@@ -19,8 +20,9 @@
             />
           </fieldset>
           <fieldset class="fieldset mt-4">
-            <label class="label">Senha</label>
+            <label class="label" for="senhaInput"> Senha</label>
             <input
+              id="senhaInput"
               [formControl]="obterControleFormulario('senha')"
               type="password"
               class="input"
