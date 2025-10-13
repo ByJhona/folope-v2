@@ -3,6 +3,8 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth-service';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'folope-navbar',
@@ -12,10 +14,15 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class Navbar {
   private readonly rota = inject(Router);
+  readonly authServ = inject(AuthService);
+  readonly oAuth = inject(OAuthService);
   usuario = signal<Usuario | undefined | null>(undefined);
   pesquisa = new FormControl('');
 
   login() {
-    this.rota.navigate(['/autenticacao']);
+    this.authServ.login();
+  }
+  logout() {
+    this.authServ.logout();
   }
 }

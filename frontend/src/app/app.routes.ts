@@ -8,6 +8,7 @@ export const routes: Routes = [
     component: HomePage,
     title: 'Folope - Home',
   },
+
   {
     path: 'autenticacao',
     loadComponent: () =>

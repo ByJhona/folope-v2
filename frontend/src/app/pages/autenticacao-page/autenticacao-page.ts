@@ -29,16 +29,7 @@ export class AutenticacaoPage {
   login() {
     if (this.loginForm.invalid) return;
 
-    this.auth
-      .login(this.loginForm.value.apelido!, this.loginForm.value.senha!)
-      .subscribe({
-        next: (response: any) => {
-          console.log('Login bem-sucedido:');
-        },
-        error: (error: any) => {
-          console.error('Erro no login:');
-        },
-      });
+    this.auth.login();
   }
 
   obterControleFormulario(nomeControle: string) {

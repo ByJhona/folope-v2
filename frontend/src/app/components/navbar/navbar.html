@@ -37,26 +37,30 @@
           ></lucide-angular>
         </label>
       </li>
-      @if(true){
+      @if(!this.authServ.tokenValido()){
       <li><a (click)="login()">Login</a></li>
       }@else{
       <li>
-        <details>
-          <summary>
-            {{ usuario()?.apelido }}
-            <div class="btn btn-ghost btn-circle avatar">
-              <div class="w-10 rounded-full">
-                <img alt="Foto de usuário" [src]="usuario()?.urlFotoPerfil" />
-              </div>
+        <div class="dropdown dropdown-hover dropdown-end">
+          Jhonatan
+          <div class="btn btn-ghost btn-circle avatar">
+            <div class="w-10 rounded-full">
+              <img
+                alt="Foto de usuário"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVbm0apPzC3cth6gQXKHIo1e5SDb_GUK-mhBN7TbuFRWq6QdITpeOy9z3NMevztUEX10I&usqp=CAU"
+              />
             </div>
-          </summary>
-          <ul class="bg-base-100 rounded-t-none p-2 z-50">
+          </div>
+          <ul
+            tabindex="-1"
+            class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+          >
             <li><a>Perfil</a></li>
             <li><a>Atividades</a></li>
             <li><a>Configurações</a></li>
-            <li><a href="">Sair</a></li>
+            <li><a (click)="logout()">Sair</a></li>
           </ul>
-        </details>
+        </div>
       </li>
       }
     </ul>
