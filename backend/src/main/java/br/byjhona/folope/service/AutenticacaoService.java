@@ -2,6 +2,7 @@ package br.byjhona.folope.service;
 
 import br.byjhona.folope.domain.usuario.Usuario;
 import br.byjhona.folope.domain.usuario.UsuarioCadastroDTO;
+import br.byjhona.folope.domain.usuario.UsuarioDTO;
 import br.byjhona.folope.repository.AutenticacaoRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,10 @@ public class AutenticacaoService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Usuario cadastrar(UsuarioCadastroDTO dto) {
+    public UsuarioDTO cadastrar(UsuarioCadastroDTO dto) {
         String senhaBcrypt = passwordEncoder.encode(dto.senha());
-        Usuario usuario = new Usuario(dto.apelido(), senhaBcrypt);
-        return authRepo.save(usuario);
+        Usuario usuario = new Usuario(dto.nomeUsuario(), senhaBcrypt);
+        Usuario usuarioCadastrado = authRepo.save(usuario);
+        return new UsuarioDTO(usuarioCadastrado.getUsername());
     }
 }

@@ -1,3 +1,4 @@
+import { UsuarioCadastroInterface } from '../../types/UsuarioCadastroInterface';
 import { Component, inject } from '@angular/core';
 import {
   FormGroup,
@@ -6,7 +7,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
-import { CadastroUsuarioInterface } from '../../types/CadastroUsuarioInterface';
 
 @Component({
   selector: 'folope-cadastro-page',
@@ -27,17 +27,24 @@ export class CadastroPage {
     }),
   });
 
-  cadastrar() {
+  cadastrar(): void {
     if (this.cadastroForm.invalid) return;
-    const usuario: CadastroUsuarioInterface = {
-      apelido: this.cadastroForm.value.apelido!,
+    const usuario: UsuarioCadastroInterface = {
+      nomeUsuario: this.cadastroForm.value.apelido!,
       senha: this.cadastroForm.value.senha!,
     };
     this.auth.cadastrar(usuario).subscribe((usuario) => {
+      // TODO - mostrar mensagem de sucesso num snackbar
       console.log('Usuário cadastrado com sucesso', usuario);
-      this.cadastroForm.reset();
-      this.auth.login();
+      this.redirecionarParaLogin();
     });
+  }
+
+  redirecionarParaLogin(): void {
+    this.cadastroForm.reset();
+    setTimeout(() => {
+      this.auth.login();
+    }, 1000);
   }
 
   obterControleFormulario(nomeControle: string) {

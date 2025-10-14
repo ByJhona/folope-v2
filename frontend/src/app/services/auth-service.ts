@@ -3,8 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { environment as env } from '../../environments/environment';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authConfig } from '../config/auth.config';
-import { CadastroUsuarioInterface } from '../types/CadastroUsuarioInterface';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
+import { UsuarioCadastroInterface } from '../types/UsuarioCadastroInterface';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +31,7 @@ export class AuthService {
     this.oauthServ.initCodeFlow();
   }
 
-  cadastrar(usuario: CadastroUsuarioInterface): Observable<any> {
+  cadastrar(usuario: UsuarioCadastroInterface): Observable<any> {
     return this.http.post<any>(
       `${this.apiUrl}/autenticacao/cadastrar`,
       usuario

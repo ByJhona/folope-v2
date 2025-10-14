@@ -14,15 +14,17 @@ import java.util.List;
 @Entity
 @Table(name = "usuario")
 public class Usuario implements UserDetails {
-    private String apelido;
-    private String senha;
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "nome")
+    private String nomeUsuario;
+    private String senha;
 
-    public Usuario(String apelido, String senha) {
-        this.apelido = apelido;
+
+    public Usuario(String nomeUsuario, String senha) {
+        this.nomeUsuario = nomeUsuario;
         this.senha = senha;
     }
 
@@ -39,6 +41,6 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.apelido;
+        return this.nomeUsuario;
     }
 }

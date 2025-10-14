@@ -1,5 +1,4 @@
 export interface Usuario {
-  apelido: string;
-  senha: string;
+  nomeUsuario: string;
   urlFotoPerfil?: string;
 }

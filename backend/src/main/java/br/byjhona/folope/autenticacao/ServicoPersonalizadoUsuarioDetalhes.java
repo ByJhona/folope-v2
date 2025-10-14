@@ -15,7 +15,7 @@ public class ServicoPersonalizadoUsuarioDetalhes implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String apelido) throws UsernameNotFoundException {
-        return usuarioRepo.findByApelido(apelido).orElseThrow(() -> new UsernameNotFoundException("Usuario nao encontrado"));
+    public UserDetails loadUserByUsername(String nomeUsuario) throws UsernameNotFoundException {
+        return usuarioRepo.findByNomeUsuario(nomeUsuario).orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
 }

@@ -1,7 +1,7 @@
 package br.byjhona.folope.controller;
 
-import br.byjhona.folope.domain.usuario.Usuario;
 import br.byjhona.folope.domain.usuario.UsuarioCadastroDTO;
+import br.byjhona.folope.domain.usuario.UsuarioDTO;
 import br.byjhona.folope.service.AutenticacaoService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +20,8 @@ public class AutenticacaoController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Usuario> cadastrar(@RequestBody UsuarioCadastroDTO dto) {
-        Usuario usuario = authServ.cadastrar(dto);
-        return ResponseEntity.ok().body(usuario);
+    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody UsuarioCadastroDTO dto) {
+        UsuarioDTO usuarioCadastrado = authServ.cadastrar(dto);
+        return ResponseEntity.ok().body(usuarioCadastrado);
     }
 }
