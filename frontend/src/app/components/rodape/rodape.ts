@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 
 @Component({
-  selector: 'folope-footer',
+  selector: 'folope-rodape',
   imports: [],
-  templateUrl: './footer.html',
-  styleUrl: './footer.scss',
+  templateUrl: './rodape.html',
+  styleUrl: './rodape.scss',
 })
-export class Footer {
+export class Rodape {
   anoAtual = signal(new Date().getFullYear());
 }
