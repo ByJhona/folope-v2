@@ -38,13 +38,12 @@
         </label>
       </li>
       @if(!this.autenticacaoServ.tokenValido()){
-      <li><a (click)="login()">Entrar</a></li>
-      <li><a (click)="cadastrar()">Cadastrar</a></li>
+      <li><a (click)="login()">Entrar | Cadastrar</a></li>
 
       }@else{
       <li>
         <div class="dropdown dropdown-hover dropdown-end">
-          Jhonatan
+          {{ usuario()?.nomeUsuario }}
           <div class="btn btn-ghost btn-circle avatar">
             <div class="w-10 rounded-full">
               <img

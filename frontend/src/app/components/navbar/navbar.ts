@@ -1,10 +1,10 @@
-import { Usuario } from './../../types/Usuario';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AutenticacaoService } from '../../services/autenticacao-service';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { UsuarioService } from '../../services/usuario-service';
 
 @Component({
   selector: 'folope-navbar',
@@ -13,17 +13,15 @@ import { OAuthService } from 'angular-oauth2-oidc';
   styleUrl: './navbar.scss',
 })
 export class Navbar {
-  private readonly rota = inject(Router);
   readonly autenticacaoServ = inject(AutenticacaoService);
   readonly oAuth = inject(OAuthService);
-  usuario = signal<Usuario | undefined | null>(undefined);
+  private readonly usuarioServ = inject(UsuarioService);
+  usuario = computed(() => this.usuarioServ.usuario);
+
   pesquisa = new FormControl('');
 
   login() {
     this.autenticacaoServ.login();
-  }
-  cadastrar() {
-    this.rota.navigate(['/cadastrar']);
   }
   logout() {
     this.autenticacaoServ.logout();

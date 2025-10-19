@@ -1,6 +1,5 @@
-import { TipoCardFilmePrincipal } from '../../types/TipoCardFilmePrincipal';
 import { Rating } from './../rating/rating';
-import { Component, input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'folope-skeleton-card-filme-principal',
@@ -8,6 +7,4 @@ import { Component, input } from '@angular/core';
   templateUrl: './skeleton-card-filme-principal.html',
   styleUrl: './skeleton-card-filme-principal.scss',
 })
-export class SkeletonCardFilmePrincipal {
-  tipo = input<TipoCardFilmePrincipal>('homePage');
-}
+export class SkeletonCardFilmePrincipal {}

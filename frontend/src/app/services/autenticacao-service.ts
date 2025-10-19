@@ -1,17 +1,13 @@
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment as env } from '../../environments/environment';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authConfig } from '../config/auth.config';
-import { Observable } from 'rxjs';
-import { UsuarioCadastroInterface } from '../types/UsuarioCadastroInterface';
+import { UsuarioService } from './usuario-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AutenticacaoService {
-  private readonly apiUrl: string = `${env.api.serverUrl}`;
-  private readonly http = inject(HttpClient);
+  private readonly usuarioServ = inject(UsuarioService);
   private readonly oauthServ = inject(OAuthService);
 
   constructor() {
@@ -20,22 +16,17 @@ export class AutenticacaoService {
 
   private recuperarContextoAuth(): void {
     this.oauthServ.configure(authConfig);
-    this.oauthServ.loadDiscoveryDocumentAndTryLogin();
+    this.oauthServ.loadDiscoveryDocumentAndTryLogin().then(() => {
+      this.definirUsuario();
+    });
   }
 
   login(): void {
     if (this.oauthServ.hasValidAccessToken()) {
-      console.log('Já logado, não precisa iniciar fluxo');
+      console.warn('Já logado, não precisa iniciar fluxo');
       return;
     }
     this.oauthServ.initCodeFlow();
-  }
-
-  cadastrar(usuario: UsuarioCadastroInterface): Observable<any> {
-    return this.http.post<any>(
-      `${this.apiUrl}/autenticacao/cadastrar`,
-      usuario
-    );
   }
 
   logout(): void {
@@ -44,5 +35,14 @@ export class AutenticacaoService {
 
   tokenValido(): boolean {
     return this.oauthServ.hasValidAccessToken();
+  }
+
+  definirUsuario(): void {
+    if (this.tokenValido() === false) return;
+    const claims = this.oauthServ.getIdentityClaims();
+    if (!claims) return;
+
+    const nomeUsuario = claims['sub'];
+    this.usuarioServ.definirUsuario({ nomeUsuario: nomeUsuario });
   }
 }

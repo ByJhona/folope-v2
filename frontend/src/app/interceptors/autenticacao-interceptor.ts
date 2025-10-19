@@ -5,7 +5,5 @@ export function autenticacaoInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
-  console.log(req);
-
   return next(req).pipe(tap((event) => {}));
 }

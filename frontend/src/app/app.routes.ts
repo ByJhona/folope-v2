@@ -8,13 +8,6 @@ export const routes: Routes = [
     component: HomePage,
     title: 'Folope - Home',
   },
-
-  {
-    path: 'cadastrar',
-    loadComponent: () =>
-      import('./pages/cadastro-page/cadastro-page').then((m) => m.CadastroPage),
-    title: 'Folope - Login',
-  },
   {
     path: 'filme/:id',
     loadComponent: () =>

@@ -1,4 +1,4 @@
-export interface Usuario {
+export interface UsuarioInterface {
   nomeUsuario: string;
   urlFotoPerfil?: string;
 }
