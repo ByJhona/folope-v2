@@ -92,6 +92,21 @@
             cursor: pointer;
             text-decoration: underline;
         }
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.2rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease-in-out;
+        }
+
+.back-arrow:hover {
+    color: #ff0077;
+}
+
 
         @media (max-width: 480px) {
             .login-card {
@@ -102,6 +117,8 @@
     </style>
 </head>
 <body>
+<a class="back-arrow" href="http://localhost:4200">&#8592; Voltar</a>
+
 
 <div class="login-card">
     <h1>Folope</h1>
