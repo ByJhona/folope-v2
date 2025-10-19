@@ -25,11 +25,7 @@
     </div>
 
     <div class="ml-12">
-      <button
-        (click)="buscarDetalhesFilme()"
-        [class.cursor-pointer]="tipo() !== 'filmePage'"
-        [class.disabled]="tipo() === 'filmePage'"
-      >
+      <button (click)="buscarDetalhesFilme()" class="cursor-pointer">
         <h1 class="text-5xl font-bold text-base-content">
           {{ filme()?.titulo }}
         </h1>
@@ -37,14 +33,13 @@
 
       <div class="informacoes-filme flex flex-direction-row items-center gap-4">
         <folope-rating
-          [id]="filme()?.id || 0"
-          [nota]="filme()?.nota || 0"
+          [id]="filme()?.id"
+          [nota]="filme()?.nota"
         ></folope-rating>
         <span>|</span>
 
-        <span>{{ filme()?.dataLancamento }}</span>
+        <span>{{ filme()?.dataLancamento | date }}</span>
       </div>
-      @if (tipo() === "filmePage") {
       <div class="acoes flex flex-row gap-2 mt-4">
         <div
           class="tooltip"
@@ -54,6 +49,7 @@
             class="btn btn-secondary"
             [class.btn-soft]="!curtido()"
             (click)="alterarEstadoCurtida(!this.curtido())"
+            [disabled]="!usuarioLogado()"
           >
             <lucide-angular
               [name]="curtido() ? 'heart-off' : 'heart'"
@@ -73,6 +69,7 @@
             class="btn btn-accent"
             [class.btn-soft]="!desejado()"
             (click)="alterarEstadoDesejo(!this.desejado())"
+            [disabled]="!usuarioLogado()"
           >
             <lucide-angular
               [name]="desejado() ? 'clock-fading' : 'clock-plus'"
@@ -80,7 +77,7 @@
           </button>
         </div>
       </div>
-      }
+
       <p class="py-6 text-base-content">
         {{ filme()?.sinopse }}
       </p>
@@ -91,5 +88,5 @@
 </div>
 
 }@else {
-<folope-skeleton-card-filme-principal [tipo]="tipo()" />
+<folope-skeleton-card-filme-principal />
 }

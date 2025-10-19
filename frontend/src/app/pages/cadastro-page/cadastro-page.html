@@ -10,10 +10,10 @@
       <div class="card-body">
         <form [formGroup]="cadastroForm" (ngSubmit)="cadastrar()">
           <fieldset class="fieldset">
-            <label class="label" for="apelidoInput">Apelido</label>
+            <label class="label" for="apelidoInput">Nome de usuário</label>
             <input
-              id="apelidoInput"
-              [formControl]="obterControleFormulario('apelido')"
+              id="nomeUsuarioInput"
+              [formControl]="obterControleFormulario('nomeUsuario')"
               type="email"
               class="input"
               placeholder="Diga quem é você..."
@@ -29,7 +29,9 @@
               placeholder="Digite a senha, se é que você lembra..."
             />
             <div><a class="link link-hover">ixi! Esqueci a senha.</a></div>
-            <button class="btn btn-neutral mt-4" type="submit">Entrar</button>
+            <button class="btn btn-neutral mt-4" type="submit">
+              Cadastrar
+            </button>
           </fieldset>
         </form>
       </div>

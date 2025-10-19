@@ -9,7 +9,7 @@ import { UsuarioCadastroInterface } from '../types/UsuarioCadastroInterface';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AutenticacaoService {
   private readonly apiUrl: string = `${env.api.serverUrl}`;
   private readonly http = inject(HttpClient);
   private readonly oauthServ = inject(OAuthService);

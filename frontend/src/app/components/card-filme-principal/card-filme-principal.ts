@@ -2,19 +2,19 @@ import { Component, inject, input, output } from '@angular/core';
 import { FilmeResumo } from '../../types/FilmeResumo';
 import { Rating } from '../rating/rating';
 import { LucideAngularModule } from 'lucide-angular';
-import { TipoCardFilmePrincipal } from '../../types/TipoCardFilmePrincipal';
 import { Router } from '@angular/router';
 import { SkeletonCardFilmePrincipal } from '../skeleton-card-filme-principal/skeleton-card-filme-principal';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'folope-card-filme-principal',
-  imports: [Rating, LucideAngularModule, SkeletonCardFilmePrincipal],
+  imports: [Rating, LucideAngularModule, SkeletonCardFilmePrincipal, DatePipe],
   templateUrl: './card-filme-principal.html',
   styleUrl: './card-filme-principal.scss',
 })
 export class CardFilmePrincipal {
   router = inject(Router);
-  filme = input.required<FilmeResumo | undefined>();
-  tipo = input.required<TipoCardFilmePrincipal>();
+  filme = input<FilmeResumo | undefined>();
+  usuarioLogado = input<boolean>(false);
   curtido = input<boolean>(false);
   curtiu = output<boolean>();
   desejado = input<boolean>(false);

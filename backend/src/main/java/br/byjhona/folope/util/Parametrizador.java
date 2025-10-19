@@ -37,7 +37,7 @@ public class Parametrizador {
                 .ifPresent(p -> builder.queryParam("include_image_language", p));
 
 
-        //builder.queryParam("language", "pt-BR");
+        builder.queryParam("language", "pt-BR");
 
 
         return builder.toUriString();

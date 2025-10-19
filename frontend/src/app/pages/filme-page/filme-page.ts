@@ -15,6 +15,7 @@ import { CardComentario } from '../../components/card-comentario/card-comentario
 import { Comentario } from '../../types/Comentario';
 import { ImagemFilme } from '../../types/ImagemFilme';
 import { CurtidaAlvoEnum } from '../../types/Curtida';
+import { AutenticacaoService } from '../../services/autenticacao-service';
 
 @Component({
   selector: 'folope-filme-page',
@@ -25,6 +26,7 @@ import { CurtidaAlvoEnum } from '../../types/Curtida';
 export class FilmePage {
   private readonly rotaAtiva = inject(ActivatedRoute);
   private readonly api = inject(ApiFolope);
+  public readonly authServ = inject(AutenticacaoService);
   filme = signal<FilmeResumo | undefined>(undefined);
   comentarios!: Comentario[];
   imagens!: ImagemFilme[];
@@ -42,17 +44,13 @@ export class FilmePage {
             filme: this.api.pesquisarFilmeId(id),
             comentarios: this.api.pesquisarComentariosFilmeId(id),
             imagens: this.api.pesquisarImagensFilmeId(id),
-            curtiu: this.api.buscarExistenciaCurtida(id, CurtidaAlvoEnum.FILME),
-            desejou: this.api.buscarExistenciaDesejo(id),
           });
         })
       )
-      .subscribe(({ filme, comentarios, imagens, curtiu, desejou }) => {
+      .subscribe(({ filme, comentarios, imagens }) => {
         this.comentarios = comentarios.resultados;
         this.filme.set(filme);
         this.imagens = imagens;
-        this.curtiu.set(curtiu);
-        this.desejou.set(desejou);
       });
   }
 

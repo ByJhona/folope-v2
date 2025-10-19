@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '../../services/auth-service';
+import { AutenticacaoService } from '../../services/autenticacao-service';
 
 @Component({
   selector: 'folope-cadastro-page',
@@ -15,9 +15,9 @@ import { AuthService } from '../../services/auth-service';
   styleUrl: './cadastro-page.scss',
 })
 export class CadastroPage {
-  private readonly auth = inject(AuthService);
+  private readonly auth = inject(AutenticacaoService);
   cadastroForm = new FormGroup({
-    apelido: new FormControl('', {
+    nomeUsuario: new FormControl('', {
       validators: [Validators.required],
       nonNullable: true,
     }),
@@ -30,7 +30,7 @@ export class CadastroPage {
   cadastrar(): void {
     if (this.cadastroForm.invalid) return;
     const usuario: UsuarioCadastroInterface = {
-      nomeUsuario: this.cadastroForm.value.apelido!,
+      nomeUsuario: this.cadastroForm.value.nomeUsuario!,
       senha: this.cadastroForm.value.senha!,
     };
     this.auth.cadastrar(usuario).subscribe((usuario) => {

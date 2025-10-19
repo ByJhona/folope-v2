@@ -37,7 +37,7 @@
           ></lucide-angular>
         </label>
       </li>
-      @if(!this.authServ.tokenValido()){
+      @if(!this.autenticacaoServ.tokenValido()){
       <li><a (click)="login()">Entrar</a></li>
       <li><a (click)="cadastrar()">Cadastrar</a></li>
 

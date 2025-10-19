@@ -1,27 +1,49 @@
 package br.byjhona.folope.controller;
 
 import br.byjhona.folope.domain.usuario.UsuarioCadastroDTO;
-import br.byjhona.folope.domain.usuario.UsuarioDTO;
 import br.byjhona.folope.service.AutenticacaoService;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@RestController
-@RequestMapping(path = "autenticacao", produces = MediaType.APPLICATION_JSON_VALUE)
+@Controller
 public class AutenticacaoController {
-    private final AutenticacaoService authServ;
+    private final AutenticacaoService autenticacaoServ;
 
-    public AutenticacaoController(AutenticacaoService authServ) {
-        this.authServ = authServ;
+    public AutenticacaoController(AutenticacaoService autenticacaoServ) {
+        this.autenticacaoServ = autenticacaoServ;
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody UsuarioCadastroDTO dto) {
-        UsuarioDTO usuarioCadastrado = authServ.cadastrar(dto);
-        return ResponseEntity.ok().body(usuarioCadastrado);
+    public String cadastrarUsuario(@RequestParam String nomeUsuario,
+                                   @RequestParam String senha,
+                                   @RequestParam String senhaConfirmada,
+                                   Model model) {
+     
+        if (!senha.equals(senhaConfirmada)) {
+            model.addAttribute("mostrarCadastro", true);
+            model.addAttribute("nomeUsuario", nomeUsuario);
+            model.addAttribute("msgError", "As senhas não coincidem!");
+            return "login";
+        }
+
+        try {
+            UsuarioCadastroDTO dto = new UsuarioCadastroDTO(nomeUsuario, senha);
+            autenticacaoServ.cadastrar(dto);
+            model.addAttribute("msgSuccess", "Cadastro realizado! Faça login.");
+        } catch (Exception e) {
+            model.addAttribute("nomeUsuario", nomeUsuario);
+            model.addAttribute("msgError", "Erro: " + e.getMessage());
+        }
+
+        return "login";
     }
+
 }

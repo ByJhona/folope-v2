@@ -3,7 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth-service';
+import { AutenticacaoService } from '../../services/autenticacao-service';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
@@ -14,18 +14,18 @@ import { OAuthService } from 'angular-oauth2-oidc';
 })
 export class Navbar {
   private readonly rota = inject(Router);
-  readonly authServ = inject(AuthService);
+  readonly autenticacaoServ = inject(AutenticacaoService);
   readonly oAuth = inject(OAuthService);
   usuario = signal<Usuario | undefined | null>(undefined);
   pesquisa = new FormControl('');
 
   login() {
-    this.authServ.login();
+    this.autenticacaoServ.login();
   }
   cadastrar() {
     this.rota.navigate(['/cadastrar']);
   }
   logout() {
-    this.authServ.logout();
+    this.autenticacaoServ.logout();
   }
 }

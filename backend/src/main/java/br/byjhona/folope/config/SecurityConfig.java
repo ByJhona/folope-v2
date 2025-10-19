@@ -93,13 +93,13 @@ public class SecurityConfig {
             throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/login", "/cadastrar").permitAll()
                         .requestMatchers("/filme/**").permitAll()
                         .requestMatchers("/autenticacao/cadastrar").permitAll()
-                        .requestMatchers("/usuario/cadastrar").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(CsrfConfigurer::disable)
-                .formLogin(Customizer.withDefaults());
+                .formLogin(form -> form.loginPage("/login"));
 
         return http.build();
     }
