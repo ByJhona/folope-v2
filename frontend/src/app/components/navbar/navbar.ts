@@ -5,10 +5,11 @@ import { RouterLink } from '@angular/router';
 import { AutenticacaoService } from '../../services/autenticacao-service';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { UsuarioService } from '../../services/usuario-service';
+import { BotaoTema } from '../botao-tema/botao-tema';
 
 @Component({
   selector: 'folope-navbar',
-  imports: [ReactiveFormsModule, LucideAngularModule, RouterLink],
+  imports: [ReactiveFormsModule, LucideAngularModule, RouterLink, BotaoTema],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
@@ -20,10 +21,10 @@ export class Navbar {
 
   pesquisa = new FormControl('');
 
-  login() {
-    this.autenticacaoServ.login();
+  entrar() {
+    this.autenticacaoServ.entrar();
   }
-  logout() {
-    this.autenticacaoServ.logout();
+  sair() {
+    this.autenticacaoServ.sair();
   }
 }

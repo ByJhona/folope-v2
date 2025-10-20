@@ -21,7 +21,7 @@ export class AutenticacaoService {
     });
   }
 
-  login(): void {
+  entrar(): void {
     if (this.oauthServ.hasValidAccessToken()) {
       console.warn('Já logado, não precisa iniciar fluxo');
       return;
@@ -29,7 +29,7 @@ export class AutenticacaoService {
     this.oauthServ.initCodeFlow();
   }
 
-  logout(): void {
+  sair(): void {
     this.oauthServ.logOut();
   }
 
