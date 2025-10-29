@@ -41,16 +41,4 @@ export class HomePage {
   removerFilmeLista(FilmeResumo: FilmeResumo) {
     this.filmes = this.filmes.filter((filme) => filme != FilmeResumo);
   }
-
-  publico() {
-    this.apiServ.publico().subscribe((mensagem) => {
-      console.log(mensagem);
-    });
-  }
-
-  privado() {
-    this.apiServ.privado().subscribe((mensagem) => {
-      console.log(mensagem);
-    });
-  }
 }

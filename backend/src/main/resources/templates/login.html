@@ -123,7 +123,7 @@
 <div class="login-card">
     <h1>Folope</h1>
 
-    <form id="login-form" method="post" th:action="@{/login}"
+    <form id="login-form" method="post" th:action="@{/auth/login}"
           th:style="${mostrarCadastro} ? 'display:none;' : 'display:block;'">
         <div class="form-group">
             <label for="username">Usuário</label>
@@ -147,7 +147,7 @@
         <span class="toggle-link" onclick="toggleForms()">Não tem conta? Cadastre-se</span>
     </form>
 
-    <form id="cadastro-form" method="post" style="display:none;" th:action="@{/cadastrar}"
+    <form id="cadastro-form" method="post" style="display:none;" th:action="@{/auth/signup}"
           th:style="${mostrarCadastro} ? 'display:block;' : 'display:none;'">
         <div class="form-group">
             <label for="newUsername">Usuário</label>

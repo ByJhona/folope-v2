@@ -1,4 +1,4 @@
-package br.byjhona.folope.domain.curtida;
+package br.byjhona.folope.domain.like;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,25 +14,25 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "curtida")
-public class Curtida {
+public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "id_alvo")
-    private Long idAlvo;
+    private Long targetId;
     @Column(name = "id_usuario")
-    private String idUsuario;
+    private Long userId;
     @Column(name = "alvo")
     @Enumerated(EnumType.STRING)
-    private AlvoCurtidaEnum alvo;
+    private LikeTargetEnum targetType;
     @Column(name = "data")
-    private Instant data;
+    private Instant timestramp;
 
 
-    public Curtida(CurtidaDTO dto, String idUsuario) {
-        this.idAlvo = dto.idAlvo();
-        this.idUsuario = idUsuario;
-        this.alvo = dto.alvo();
-        this.data = Instant.now();
+    public Like(LikeDTO dto, Long userId) {
+        this.targetId = dto.targetId();
+        this.userId = userId;
+        this.targetType = dto.targetType();
+        this.timestramp = Instant.now();
     }
 }

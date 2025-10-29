@@ -1,6 +1,7 @@
 package br.byjhona.folope.config;
 
 
+import br.byjhona.folope.autenticacao.RestAuthenticationEntryPoint;
 import br.byjhona.folope.autenticacao.ServicoPersonalizadoUsuarioDetalhes;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -13,7 +14,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -41,10 +43,12 @@ import java.util.UUID;
 public class SecurityConfig {
 
     private final ServicoPersonalizadoUsuarioDetalhes userDetailsService;
+    private final RestAuthenticationEntryPoint restEntryPoint;
 
 
-    public SecurityConfig(ServicoPersonalizadoUsuarioDetalhes userDetailsService) {
+    public SecurityConfig(ServicoPersonalizadoUsuarioDetalhes userDetailsService, RestAuthenticationEntryPoint restEntryPoint) {
         this.userDetailsService = userDetailsService;
+        this.restEntryPoint = restEntryPoint;
     }
 
     private static KeyPair generateRsaKey() {
@@ -76,11 +80,13 @@ public class SecurityConfig {
                         authorize
                                 .anyRequest().authenticated()
                 )
-
                 .exceptionHandling((exceptions) -> exceptions
                         .defaultAuthenticationEntryPointFor(
-                                new LoginUrlAuthenticationEntryPoint("/login"),
-                                new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
+                                new LoginUrlAuthenticationEntryPoint("/auth/login"),
+                                new MediaTypeRequestMatcher(MediaType.TEXT_HTML))
+                        .defaultAuthenticationEntryPointFor(
+                                restEntryPoint,
+                                new MediaTypeRequestMatcher(MediaType.APPLICATION_JSON)
                         )
                 );
 
@@ -89,18 +95,30 @@ public class SecurityConfig {
 
     @Bean
     @Order(2)
-    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
-            throws Exception {
+    public SecurityFilterChain loginSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/login", "/cadastrar").permitAll()
-                        .requestMatchers("/filme/**").permitAll()
-                        .requestMatchers("/autenticacao/cadastrar").permitAll()
+                .securityMatcher("/auth/login", "/auth/signup", "/css/**", "/js/**", "/favicon.ico")
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(form -> form
+                        .loginPage("/auth/login")
+                        .permitAll()
+                )
+                .logout(logout -> logout.invalidateHttpSession(false).clearAuthentication(true));
+        return http.build();
+    }
+
+    @Bean
+    @Order(3)
+    public SecurityFilterChain resourceServerSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/**", "/auth/filmes/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .csrf(CsrfConfigurer::disable)
-                .formLogin(form -> form.loginPage("/login"));
-
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
     }
 
@@ -142,7 +160,6 @@ public class SecurityConfig {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
     }
 
-
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder().build();
@@ -152,6 +169,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
 }

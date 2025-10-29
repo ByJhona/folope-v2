@@ -8,11 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "desejos", produces = MediaType.APPLICATION_JSON_VALUE)
-public class FilmeDesejadoController {
+@RequestMapping(path = "api/watchlist", produces = MediaType.APPLICATION_JSON_VALUE)
+public class WatchlistController {
     private final FilmeDesejadoService filmeDesejadoServ;
 
-    public FilmeDesejadoController(FilmeDesejadoService filmeDesejadoServ) {
+    public WatchlistController(FilmeDesejadoService filmeDesejadoServ) {
         this.filmeDesejadoServ = filmeDesejadoServ;
     }
 

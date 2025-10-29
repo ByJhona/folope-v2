@@ -49,7 +49,7 @@
             class="btn btn-secondary"
             [class.btn-soft]="!curtido()"
             (click)="alterarEstadoCurtida(!this.curtido())"
-            [disabled]="!usuarioLogado()"
+            [disabled]="false"
           >
             <lucide-angular
               [name]="curtido() ? 'heart-off' : 'heart'"

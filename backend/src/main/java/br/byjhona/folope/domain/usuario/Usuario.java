@@ -2,6 +2,7 @@ package br.byjhona.folope.domain.usuario;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "usuario")
+@Getter
 public class Usuario implements UserDetails {
     @Id
     @Column(name = "id")
@@ -42,4 +44,6 @@ public class Usuario implements UserDetails {
     public String getUsername() {
         return this.nomeUsuario;
     }
+
+
 }

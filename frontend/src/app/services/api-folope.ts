@@ -17,16 +17,9 @@ export class ApiFolope {
   private readonly apiUrl: string = `${env.api.serverUrl}`;
   private readonly httpClient = inject(HttpClient);
 
-  publico(): Observable<string> {
-    return this.httpClient.get<string>(this.apiUrl + '/api' + '/publico');
-  }
-  privado(): Observable<string> {
-    return this.httpClient.get<string>(this.apiUrl + '/api' + '/privado');
-  }
-
   listarFilmesPopulares(): Observable<Paginacao<FilmeResumo>> {
     return this.httpClient.get<Paginacao<FilmeResumo>>(
-      this.apiUrl + '/filme' + '/popular'
+      this.apiUrl + '/api/filmes' + '/popular'
     );
   }
 
@@ -36,7 +29,7 @@ export class ApiFolope {
   ): Observable<Paginacao<FilmeResumo>> {
     return this.httpClient.get<Paginacao<FilmeResumo>>(
       this.apiUrl +
-        '/filme' +
+        '/api/filmes' +
         '/buscar/titulo/' +
         titulo +
         '&pagina=' +
@@ -46,20 +39,20 @@ export class ApiFolope {
 
   pesquisarFilmeId(id: number): Observable<Filme> {
     return this.httpClient.get<Filme>(
-      this.apiUrl + '/filme' + '/id/' + id + '?idioma=pt-BR'
+      this.apiUrl + '/api/filmes' + '/id/' + id + '?idioma=pt-BR'
     );
   }
 
   pesquisarComentariosFilmeId(id: number): Observable<Paginacao<Comentario>> {
     return this.httpClient.get<Paginacao<Comentario>>(
-      this.apiUrl + '/filme' + '/id/' + id + '/comentarios'
+      this.apiUrl + '/api/filmes' + '/id/' + id + '/comentarios'
     );
   }
 
   pesquisarImagensFilmeId(id: number): Observable<ImagemFilme[]> {
     return this.httpClient.get<ImagemFilme[]>(
       this.apiUrl +
-        '/filme' +
+        '/api/filmes' +
         '/id/' +
         id +
         '/imagens' +
@@ -68,31 +61,43 @@ export class ApiFolope {
   }
 
   salvarDesejo(idFilme: number): Observable<Desejo> {
-    return this.httpClient.post<Desejo>(this.apiUrl + '/desejos', {
-      idFilme,
-    });
+    return this.httpClient.post<Desejo>(
+      this.apiUrl + '/api/desejos',
+      {
+        idFilme,
+      },
+      { withCredentials: true }
+    );
   }
   removerDesejo(idFilme: number): Observable<void> {
     return this.httpClient.delete<void>(
-      this.apiUrl + '/desejos' + '?idFilme=' + idFilme
+      this.apiUrl + '/api/desejos' + '?idFilme=' + idFilme,
+      { withCredentials: true }
     );
   }
   buscarExistenciaDesejo(idFilme: number): Observable<boolean> {
     return this.httpClient.get<boolean>(
-      this.apiUrl + '/desejos/existe' + '?idFilme=' + idFilme
+      this.apiUrl + '/api/desejos/existe' + '?idFilme=' + idFilme,
+      { withCredentials: true }
     );
   }
 
   removerCurtida(idAlvo: number, alvo: CurtidaAlvoEnum): Observable<void> {
     return this.httpClient.delete<void>(
-      this.apiUrl + '/curtidas' + '?idAlvo=' + idAlvo + '&alvo=' + alvo
+      this.apiUrl + '/api/curtidas' + '?idAlvo=' + idAlvo + '&alvo=' + alvo,
+      { withCredentials: true }
     );
   }
   salvarCurtida(idAlvo: number, alvo: CurtidaAlvoEnum): Observable<Curtida> {
-    return this.httpClient.post<Curtida>(this.apiUrl + '/curtidas', {
-      idAlvo,
-      alvo,
-    });
+    console.log('Salvando curtida para', idAlvo, alvo);
+    return this.httpClient.post<Curtida>(
+      this.apiUrl + '/api/curtidas',
+      {
+        idAlvo,
+        alvo,
+      },
+      { withCredentials: true }
+    );
   }
 
   buscarExistenciaCurtida(
@@ -100,7 +105,13 @@ export class ApiFolope {
     alvo: CurtidaAlvoEnum
   ): Observable<boolean> {
     return this.httpClient.get<boolean>(
-      this.apiUrl + '/curtidas/existe' + '?idAlvo=' + idAlvo + '&alvo=' + alvo
+      this.apiUrl +
+        '/api/curtidas/existe' +
+        '?idAlvo=' +
+        idAlvo +
+        '&alvo=' +
+        alvo,
+      { withCredentials: true }
     );
   }
 }

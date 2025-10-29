@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "filme", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "api/filmes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FilmeController {
     private final TmdbAPI api;
 
@@ -57,6 +57,6 @@ public class FilmeController {
         List<ImagemFilmeDTO> imagensDTO = api.buscarImagensFilme(parametros, id);
         return ResponseEntity.ok().body(imagensDTO);
     }
-    
+
 
 }
