@@ -1,8 +1,8 @@
-export interface Curtida {
+export interface CurtidaFilme {
   id?: number;
-  idAlvo: number;
-  alvo: CurtidaAlvoEnum;
-  data: Date;
+  usuarioId: number;
+  filmeId: number;
+  criado: Date;
 }
 
 export interface Paginacao<T> {
@@ -10,11 +10,6 @@ export interface Paginacao<T> {
   quantPaginas: number;
   quantResultados: number;
   resultados: T[];
-}
-
-export enum CurtidaAlvoEnum {
-  FILME = "FILME",
-  COMENTARIO = "COMENTARIO",
 }
 
 export interface Filme {

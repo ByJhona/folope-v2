@@ -14,7 +14,7 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "curtida")
-public class Like {
+public class Curtida {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,12 +24,12 @@ public class Like {
     private Long userId;
     @Column(name = "alvo")
     @Enumerated(EnumType.STRING)
-    private LikeTargetEnum targetType;
+    private CurtidaEnum targetType;
     @Column(name = "data")
     private Instant timestramp;
 
 
-    public Like(LikeDTO dto, Long userId) {
+    public Curtida(CurtidaDTO dto, Long userId) {
         this.targetId = dto.targetId();
         this.userId = userId;
         this.targetType = dto.targetType();

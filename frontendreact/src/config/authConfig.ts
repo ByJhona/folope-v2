@@ -12,7 +12,7 @@ const authConfig: TAuthConfig = {
   logoutEndpoint: "http://localhost:8080/connect/logout",
   logoutRedirect: window.location.origin + "/",
 
-  loginMethod: "popup",
+  loginMethod: "replace",
 
   decodeToken: true,
   autoLogin: false,

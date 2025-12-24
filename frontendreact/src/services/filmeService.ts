@@ -1,5 +1,5 @@
 import api from "./api";
-import { Filme, FilmeResumo, Paginacao } from "@/types";
+import { CurtidaFilme, Filme, FilmeResumo, Paginacao } from "@/types";
 
 export const filmeService = {
   async getFilmeDestaque(): Promise<Filme> {
@@ -46,11 +46,19 @@ export const filmeService = {
     return response.data;
   },
 
-  async curtirFilme(filmeId: number): Promise<void> {
+  async curtirFilme(filmeId: string): Promise<void> {
     await api.post(`/filmes/${filmeId}/curtir`);
   },
 
   async descurtirFilme(filmeId: number): Promise<void> {
     await api.delete(`/filmes/${filmeId}/curtir`);
+  },
+
+  async buscarCurtidaFilme(filmeId: string): Promise<CurtidaFilme> {
+    return api.get(`/filmes/${filmeId}/curtir`);
+  },
+  async verificarExistenciaCurtidaFilme(filmeId: string): Promise<boolean> {
+    const response = await api.get(`/filmes/${filmeId}/curtir/status`);
+    return response.data;
   },
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Star, Clock, Calendar, Heart, MessageCircle, Play, Share2, Bookmark, ChevronRight } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -9,20 +9,33 @@ import { filmes, comentarios, generos, usuarios } from '@/data/mockData';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { filmeService } from '@/services/filmeService';
+import { AuthContext } from 'react-oauth2-code-pkce';
 
 const FilmeDetalhes = () => {
+  const {token, loginInProgress} = useContext(AuthContext)
   const { id } = useParams<{ id: string }>();
-  const [liked, setLiked] = useState(false);
+  const [curtiu, setCurtiu] = useState(false);
   const [saved, setSaved] = useState(false);
   const [newComment, setNewComment] = useState('');
 
   const [filme, setFilme] = useState(null)
 
+  const curtirFilme = () => {
+    filmeService.curtirFilme(id).then(() => {
+      setCurtiu(!curtiu)
+    })
+  }
+
   useEffect(() => {
     filmeService.getFilmeById(id).then(filme => {
       setFilme(filme)
     })
-  }, [id])
+
+    if (token && !loginInProgress) {
+    console.log("Chamando com token:", token.substring(0, 10) + "...");
+    filmeService.verificarExistenciaCurtidaFilme(id).then(setCurtiu);
+}
+  }, [id, token, loginInProgress])
 
   if (!filme) {
     return (
@@ -121,11 +134,11 @@ const FilmeDetalhes = () => {
                 <Button
                   size="lg"
                   variant="outline"
-                  onClick={() => setLiked(!liked)}
-                  className={`gap-2 ${liked ? 'border-accent text-accent' : ''}`}
+                  onClick={() => curtirFilme()}
+                  className={`gap-2 ${curtiu ? 'border-accent text-accent' : ''}`}
                 >
-                  <Heart className={`w-5 h-5 ${liked ? 'fill-current' : ''}`} />
-                  {liked ? 'Curtido' : 'Curtir'}
+                  <Heart className={`w-5 h-5 ${curtiu ? 'fill-current' : ''}`} />
+                  {curtiu ? 'Curtido' : 'Curtir'}
                 </Button>
                 <Button
                   size="lg"
