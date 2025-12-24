@@ -103,8 +103,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/auth/login")
                         .permitAll()
-                )
-                .logout(logout -> logout.invalidateHttpSession(false).clearAuthentication(true));
+                );
         return http.build();
     }
 
@@ -113,7 +112,10 @@ public class SecurityConfig {
     public SecurityFilterChain resourceServerSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**", "/auth/filmes/**").permitAll()
+                        .requestMatchers( "/api/filmes/populares",
+                                "/api/filmes/{id}",
+                                "/api/filmes/{id}/curtir/status",
+                                "/auth/filmes/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)

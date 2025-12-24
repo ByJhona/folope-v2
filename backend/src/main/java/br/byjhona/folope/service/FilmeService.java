@@ -1,55 +1,61 @@
 package br.byjhona.folope.service;
 
-import br.byjhona.folope.domain.filmeDesejado.FilmeDesejado;
-import br.byjhona.folope.domain.filmeDesejado.FilmeDesejadoDTO;
+import br.byjhona.folope.domain.curtidaFilme.CurtidaFilme;
+import br.byjhona.folope.domain.curtidaFilme.CurtidaFilmeDTO;
+import br.byjhona.folope.domain.usuario.Usuario;
 import br.byjhona.folope.exception.ObjetoDuplicadoException;
 import br.byjhona.folope.exception.ObjetoNaoEncontradaException;
-import br.byjhona.folope.repository.FilmeDesejadoRepository;
+import br.byjhona.folope.repository.CurtidaFilmeRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FilmeService {
-    private final FilmeDesejadoRepository filmeDesejadoRepo;
+    private final CurtidaFilmeRepository curtidaFilmeRepo;
+    private final UsuarioService usuarioServ;
 
-
-    public FilmeService(FilmeDesejadoRepository filmeDesejadoRepo) {
-        this.filmeDesejadoRepo = filmeDesejadoRepo;
+    public FilmeService(CurtidaFilmeRepository curtidaFilmeRepo, UsuarioService usuarioServ) {
+        this.curtidaFilmeRepo = curtidaFilmeRepo;
+        this.usuarioServ = usuarioServ;
     }
 
     @Transactional
-    public FilmeDesejadoDTO salvarFilmeDesejadoBD(FilmeDesejadoDTO dto, String idUsuario) {
-        boolean existe = filmeDesejadoRepo.existsByIdUsuarioAndIdFilme(idUsuario, dto.idFilme());
+    public CurtidaFilme salvarCurtidaBD(Long idFilme, String nomeUsuario) {
+        Usuario usuario = usuarioServ.obterUsuarioPorNome(nomeUsuario).orElseThrow(() -> new ObjetoNaoEncontradaException("Usuario [%s] nao encontrado.", nomeUsuario));
+        boolean existe = curtidaFilmeRepo.existsByUsuarioIdAndFilmeId(usuario.getId(), idFilme);
 
         if (existe) {
-            throw new ObjetoDuplicadoException("Filme já adicionado na watchlist");
+            throw new ObjetoDuplicadoException("Filme já curtido.");
         }
-
-        FilmeDesejado filmeDesejado = new FilmeDesejado(dto, idUsuario);
-        FilmeDesejado salvo = filmeDesejadoRepo.save(filmeDesejado);
-        return converterFilmeDesejadoParaDTO(salvo);
-    }
-
-    public FilmeDesejadoDTO buscarFilmeDesejadoBD(String idUsuario, Long idFilme) {
-        FilmeDesejado filmeSalvo = this.filmeDesejadoRepo.findByIdUsuarioAndIdFilme(idUsuario, idFilme);
-        return converterFilmeDesejadoParaDTO(filmeSalvo);
-    }
-
-    public Boolean buscarExistenciaFilmeDesejadoBD(String idUsuario, Long idFilme) {
-        return this.filmeDesejadoRepo.existsByIdUsuarioAndIdFilme(idUsuario, idFilme);
-    }
-
-    private FilmeDesejadoDTO converterFilmeDesejadoParaDTO(FilmeDesejado filme) {
-        return new FilmeDesejadoDTO(filme.getIdFilme(), filme.getData());
+        CurtidaFilme curtidaFilme = new CurtidaFilme(usuario.getId(),idFilme);
+        return curtidaFilmeRepo.save(curtidaFilme);
     }
 
     @Transactional
-    public void deletarFilmeDesejadoBD(String idUsuario, Long idFilme) {
-        boolean existe = filmeDesejadoRepo.existsByIdUsuarioAndIdFilme(idUsuario, idFilme);
+    public void deletarCurtidaBD(Long idUsuario, Long idFilme) {
+        boolean existe = curtidaFilmeRepo.existsByUsuarioIdAndFilmeId(idUsuario, idFilme);
 
         if (!existe) {
             throw new ObjetoNaoEncontradaException("O filme não está na watchlist.");
         }
-        this.filmeDesejadoRepo.deleteByIdUsuarioAndIdFilme(idUsuario, idFilme);
+        this.curtidaFilmeRepo.existsByUsuarioIdAndFilmeId(idUsuario, idFilme);
+    }
+
+    @Transactional
+    public CurtidaFilme obterCurtida(Long idFilme, String nomeUsuario) {
+        Usuario usuario = usuarioServ.obterUsuarioPorNome(nomeUsuario).orElseThrow(() -> new ObjetoNaoEncontradaException("Usuario [%s] nao encontrado.", nomeUsuario));
+
+        return curtidaFilmeRepo.findByUsuarioIdAndFilmeId(usuario.getId(), idFilme).orElseThrow(() ->
+            new ObjetoNaoEncontradaException("Curtida nao encontrada."));
+    }
+
+    @Transactional
+    public boolean verificarExistenciaCurtida(Long idFilme, String nomeUsuario) {
+        Usuario usuario = usuarioServ.obterUsuarioPorNome(nomeUsuario).orElseThrow(() -> new ObjetoNaoEncontradaException("Usuario [%s] nao encontrado.", nomeUsuario));
+        return curtidaFilmeRepo.existsByUsuarioIdAndFilmeId(usuario.getId(), idFilme);
+    }
+
+    public CurtidaFilmeDTO converterCurtidaFilmeParaDTO(CurtidaFilme curtida){
+        return new CurtidaFilmeDTO(curtida.getFilmeId(), curtida.getUsuarioId(), curtida.getCriado());
     }
 }

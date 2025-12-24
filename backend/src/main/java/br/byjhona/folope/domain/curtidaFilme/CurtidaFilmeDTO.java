@@ -1,6 +1,6 @@
-package br.byjhona.folope.domain.like;
+package br.byjhona.folope.domain.curtidaFilme;
 
 import java.time.Instant;
 
-public record CurtidaDTO(Long id, Long targetId, CurtidaEnum targetType, Instant timestramp) {
+public record CurtidaFilmeDTO(Long filmeId,  Long usuarioId,Instant timestramp) {
 }

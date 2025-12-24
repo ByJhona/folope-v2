@@ -3,6 +3,8 @@ package br.byjhona.folope.repository;
 import br.byjhona.folope.domain.usuario.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<Usuario, Long> {
+import java.util.Optional;
 
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    Optional<Usuario> getUsuarioByNomeUsuario(String nomeUsuario);
 }

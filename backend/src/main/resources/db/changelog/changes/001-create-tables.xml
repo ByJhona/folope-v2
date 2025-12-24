@@ -5,20 +5,17 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="1" author="jhonatan">
-        <createTable tableName="like">
+        <createTable tableName="curtida_filme">
             <column name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="id_usuario" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="id_alvo" type="bigint">
+            <column name="id_filme" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="alvo" type="varchar(30)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="data" type="timestamp">
+            <column name="criado" type="timestamp">
                 <constraints nullable="false"/>
             </column>
         </createTable>

@@ -4,16 +4,18 @@ import br.byjhona.folope.domain.usuario.Usuario;
 import br.byjhona.folope.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-public class UserService {
+public class UsuarioService {
     private final UsuarioRepository usuarioRepo;
 
-    public UserService(UsuarioRepository usuarioRepo) {
+    public UsuarioService(UsuarioRepository usuarioRepo) {
         this.usuarioRepo = usuarioRepo;
     }
 
-    public Usuario obterUsuarioPorNome(){
-        return usuarioRepo.
+    public Optional<Usuario> obterUsuarioPorNome(String nomeUsuario){
+        return usuarioRepo.getUsuarioByNomeUsuario(nomeUsuario);
     }
 
 }

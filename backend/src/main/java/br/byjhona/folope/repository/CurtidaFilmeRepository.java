@@ -5,12 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface CurtidaRepository extends JpaRepository<CurtidaFilme, Long> {
+public interface CurtidaFilmeRepository extends JpaRepository<CurtidaFilme, Long> {
 
-    Optional<CurtidaFilme> findByUserIdAndTargetIdAndTargetType(Long userId, Long targetId, CurtidaEnum targetType);
+    Optional<CurtidaFilme> findByUsuarioIdAndFilmeId(Long usuarioId, Long filmeId);
 
-    Boolean existsByUserIdAndTargetIdAndTargetType(Long userId, Long targetId, CurtidaEnum targetType);
+    Boolean existsByUsuarioIdAndFilmeId(Long usuarioId, Long filmeId);
 
-    void deleteByUserIdAndTargetIdAndTargetType(Long userId, Long targetId, CurtidaEnum targetType);
-
+    void deleteByUsuarioIdAndFilmeId(Long usuarioId, Long filmeId);
 }
