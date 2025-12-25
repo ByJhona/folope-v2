@@ -15,14 +15,32 @@ const FilmeDetalhes = () => {
   const {token, loginInProgress} = useContext(AuthContext)
   const { id } = useParams<{ id: string }>();
   const [curtiu, setCurtiu] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [watchlist, setWatchlist] = useState(false);
   const [newComment, setNewComment] = useState('');
 
   const [filme, setFilme] = useState(null)
 
+  const adicionarWatchlistFilme = () => {
+    filmeService.adicionarWatchlistFilme(id).then(() => {
+      setWatchlist(true)
+    })
+  }
+
+  const removerWatchlistFilme = () => {
+    filmeService.removerWatchlistFilme(id).then(() => {
+      setWatchlist(false)
+    })
+  }
+
   const curtirFilme = () => {
     filmeService.curtirFilme(id).then(() => {
-      setCurtiu(!curtiu)
+      setCurtiu(true)
+    })
+  }
+
+  const descurtirFilme = () => {
+    filmeService.descurtirFilme(id).then(() => {
+      setCurtiu(false)
     })
   }
 
@@ -30,11 +48,12 @@ const FilmeDetalhes = () => {
     filmeService.getFilmeById(id).then(filme => {
       setFilme(filme)
     })
+    if (!token && loginInProgress) return
 
-    if (token && !loginInProgress) {
-    console.log("Chamando com token:", token.substring(0, 10) + "...");
     filmeService.verificarExistenciaCurtidaFilme(id).then(setCurtiu);
-}
+    filmeService.verificarExistenciaWatchlistFilme(id).then(setWatchlist);
+
+
   }, [id, token, loginInProgress])
 
   if (!filme) {
@@ -134,7 +153,7 @@ const FilmeDetalhes = () => {
                 <Button
                   size="lg"
                   variant="outline"
-                  onClick={() => curtirFilme()}
+                  onClick={() => curtiu ? descurtirFilme() : curtirFilme()}
                   className={`gap-2 ${curtiu ? 'border-accent text-accent' : ''}`}
                 >
                   <Heart className={`w-5 h-5 ${curtiu ? 'fill-current' : ''}`} />
@@ -143,11 +162,11 @@ const FilmeDetalhes = () => {
                 <Button
                   size="lg"
                   variant="outline"
-                  onClick={() => setSaved(!saved)}
-                  className={`gap-2 ${saved ? 'border-primary text-primary' : ''}`}
+                  onClick={() => watchlist ? removerWatchlistFilme() : adicionarWatchlistFilme()}
+                  className={`gap-2 ${watchlist ? 'border-primary text-primary' : ''}`}
                 >
-                  <Bookmark className={`w-5 h-5 ${saved ? 'fill-current' : ''}`} />
-                  {saved ? 'Salvo' : 'Salvar'}
+                  <Bookmark className={`w-5 h-5 ${watchlist ? 'fill-current' : ''}`} />
+                  {watchlist ? 'Remover da Watchlist' : 'Adicionar à Watchlist'}
                 </Button>
                 <Button size="lg" variant="outline" className="gap-2">
                   <Share2 className="w-5 h-5" />

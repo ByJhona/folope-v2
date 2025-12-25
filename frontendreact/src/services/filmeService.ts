@@ -1,5 +1,11 @@
 import api from "./api";
-import { CurtidaFilme, Filme, FilmeResumo, Paginacao } from "@/types";
+import {
+  CurtidaFilme,
+  Filme,
+  FilmeResumo,
+  Paginacao,
+  WatchlistFilme,
+} from "@/types";
 
 export const filmeService = {
   async getFilmeDestaque(): Promise<Filme> {
@@ -46,12 +52,14 @@ export const filmeService = {
     return response.data;
   },
 
-  async curtirFilme(filmeId: string): Promise<void> {
-    await api.post(`/filmes/${filmeId}/curtir`);
+  async curtirFilme(filmeId: string): Promise<FilmeResumo> {
+    const response = await api.post(`/filmes/${filmeId}/curtir`);
+    return response.data;
   },
 
-  async descurtirFilme(filmeId: number): Promise<void> {
-    await api.delete(`/filmes/${filmeId}/curtir`);
+  async descurtirFilme(filmeId: string): Promise<FilmeResumo> {
+    const response = await api.delete(`/filmes/${filmeId}/curtir`);
+    return response.data;
   },
 
   async buscarCurtidaFilme(filmeId: string): Promise<CurtidaFilme> {
@@ -59,6 +67,21 @@ export const filmeService = {
   },
   async verificarExistenciaCurtidaFilme(filmeId: string): Promise<boolean> {
     const response = await api.get(`/filmes/${filmeId}/curtir/status`);
+    return response.data;
+  },
+
+  async adicionarWatchlistFilme(filmeId: string): Promise<WatchlistFilme> {
+    const response = await api.post(`/filmes/${filmeId}/watchlist`);
+    return response.data;
+  },
+
+  async removerWatchlistFilme(filmeId: string): Promise<WatchlistFilme> {
+    const response = await api.delete(`/filmes/${filmeId}/watchlist`);
+    return response.data;
+  },
+
+  async verificarExistenciaWatchlistFilme(filmeId: string): Promise<boolean> {
+    const response = await api.get(`/filmes/${filmeId}/watchlist/status`);
     return response.data;
   },
 };

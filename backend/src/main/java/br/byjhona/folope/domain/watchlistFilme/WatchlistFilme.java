@@ -1,4 +1,4 @@
-package br.byjhona.folope.domain.filmeDesejado;
+package br.byjhona.folope.domain.watchlistFilme;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,21 +13,22 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "desejo")
-public class FilmeDesejado {
+@Table(name = "watchlist_filme")
+public class WatchlistFilme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "id_filme")
-    private Long idFilme;
+    private Long filmeId;
     @Column(name = "id_usuario")
-    private String idUsuario;
-    @Column(name = "data")
-    private Instant data;
+    private Long usuarioId;
+    @Column(name = "criado")
+    private Instant criado;
 
-    public FilmeDesejado(FilmeDesejadoDTO dto, String idUsuario) {
-        this.idFilme = dto.idFilme();
-        this.idUsuario = idUsuario;
-        this.data = Instant.now();
+
+    public WatchlistFilme(Long usuarioId, Long filmeId) {
+        this.filmeId = filmeId;
+        this.usuarioId = usuarioId;
+        this.criado = Instant.now();
     }
 }

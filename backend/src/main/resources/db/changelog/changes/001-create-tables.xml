@@ -20,6 +20,21 @@
             </column>
         </createTable>
 
+        <createTable tableName="watchlist_filme">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_usuario" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_filme" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
         <createTable tableName="desejo">
             <column name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>

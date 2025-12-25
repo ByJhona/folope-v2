@@ -5,6 +5,13 @@ export interface CurtidaFilme {
   criado: Date;
 }
 
+export interface WatchlistFilme {
+  id?: number;
+  usuarioId: number;
+  filmeId: number;
+  criado: Date;
+}
+
 export interface Paginacao<T> {
   pagina: number;
   quantPaginas: number;
