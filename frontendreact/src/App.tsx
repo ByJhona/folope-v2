@@ -8,9 +8,10 @@ import Index from "./pages/Index";
 import Busca from "./pages/Busca";
 import FilmeDetalhes from "./pages/FilmeDetalhes";
 import Perfil from "./pages/Perfil";
-import Match from "./pages/Match";
+import Lobby from "./pages/LobbyPage";
 import Ranking from "./pages/Ranking";
 import NotFound from "./pages/NotFound";
+import SalaPage from "./pages/Sala";
 
 const queryClient = new QueryClient();
 
@@ -26,9 +27,10 @@ const App = () => (
             <Route path="/busca" element={<Busca />} />
             <Route path="/filme/:id" element={<FilmeDetalhes />} />
             <Route path="/perfil/:id" element={<Perfil />} />
-            <Route path="/match" element={<Match />} />
+            <Route path="/lobby" element={<Lobby />} />
             <Route path="/ranking" element={<Ranking />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/sala/:codigo" element={<SalaPage />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

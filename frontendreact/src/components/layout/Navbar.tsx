@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useTheme } from '@/contexts/ThemeContext';
 import { AuthContext, useAuthContext } from "react-oauth2-code-pkce";
+import { useUsuario } from '@/contexts/UsuarioContext';
 
 
 export const Navbar: React.FC = () => {
@@ -12,12 +13,9 @@ export const Navbar: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
-  const {logIn, logOut, token, tokenData, loginInProgress} = useContext(AuthContext)
+  const {logIn, logOut, token, loginInProgress} = useContext(AuthContext)
+  const {usuario} = useUsuario()
 
-  useEffect(() => {
-      console.log("LOGIN OK");
-      console.log("Usuário:", tokenData);
-  }, [tokenData]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +47,7 @@ export const Navbar: React.FC = () => {
             <Link to="/busca" className="text-muted-foreground hover:text-foreground transition-colors font-medium">
               Explorar
             </Link>
-            <Link to="/match" className="text-muted-foreground hover:text-foreground transition-colors font-medium flex items-center gap-1">
+            <Link to="/lobby" className="text-muted-foreground hover:text-foreground transition-colors font-medium flex items-center gap-1">
               <Gamepad2 className="w-4 h-4" />
               Match
             </Link>
@@ -107,7 +105,7 @@ export const Navbar: React.FC = () => {
             <Link to="/perfil/1" className="flex items-center gap-2">
               <User className="w-5 h-5 text-muted-foreground" />
               <span className="text-sm font-medium">
-                {tokenData?.sub ||
+                {usuario?.nome ||
                 "Usuário"}
               </span>
             </Link>

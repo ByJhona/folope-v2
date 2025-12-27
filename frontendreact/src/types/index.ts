@@ -43,15 +43,12 @@ export interface FilmeResumo {
 }
 
 export interface Usuario {
-  id: number;
+  id?: number;
   nome: string;
-  username: string;
   avatar: string;
   bio?: string;
   seguidores: number;
   seguindo: number;
-  curtidas: number;
-  comentarios: number;
   pontuacao: number;
 }
 
@@ -79,4 +76,16 @@ export interface Post {
 export interface Genero {
   id: number;
   nome: string;
+}
+export enum SalaStatusEnum {
+  LOBBY,
+  WAITING,
+  MATCHING,
+}
+
+export interface Sala {
+  codigo: string;
+  nome: string;
+  status: SalaStatusEnum;
+  ativa: boolean;
 }

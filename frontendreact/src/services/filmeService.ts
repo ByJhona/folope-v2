@@ -70,6 +70,11 @@ export const filmeService = {
     return response.data;
   },
 
+  async contarCurtidas(filmeId: string): Promise<number> {
+    const response = await api.get(`/filmes/${filmeId}/curtir/quantidade`);
+    return response.data;
+  },
+
   async adicionarWatchlistFilme(filmeId: string): Promise<WatchlistFilme> {
     const response = await api.post(`/filmes/${filmeId}/watchlist`);
     return response.data;

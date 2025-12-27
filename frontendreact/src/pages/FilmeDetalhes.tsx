@@ -17,6 +17,7 @@ const FilmeDetalhes = () => {
   const [curtiu, setCurtiu] = useState(false);
   const [watchlist, setWatchlist] = useState(false);
   const [newComment, setNewComment] = useState('');
+  const [quantCurtidas, setQuantCurtidas] = useState(0)
 
   const [filme, setFilme] = useState(null)
 
@@ -52,6 +53,7 @@ const FilmeDetalhes = () => {
 
     filmeService.verificarExistenciaCurtidaFilme(id).then(setCurtiu);
     filmeService.verificarExistenciaWatchlistFilme(id).then(setWatchlist);
+    filmeService.contarCurtidas(id).then(setQuantCurtidas)
 
 
   }, [id, token, loginInProgress])
@@ -256,7 +258,7 @@ const FilmeDetalhes = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-4 rounded-xl bg-secondary/50">
                   <Heart className="w-6 h-6 mx-auto mb-2 text-accent" />
-                  <p className="text-2xl font-bold">1.2k</p>
+                  <p className="text-2xl font-bold">{quantCurtidas}</p>
                   <p className="text-sm text-muted-foreground">Curtidas</p>
                 </div>
                 <div className="text-center p-4 rounded-xl bg-secondary/50">
