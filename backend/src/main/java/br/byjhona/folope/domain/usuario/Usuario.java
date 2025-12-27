@@ -21,11 +21,11 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nome")
-    private String nomeUsuario;
+    private String nome;
     private String senha;
 
-    public Usuario(String nomeUsuario, String senha) {
-        this.nomeUsuario = nomeUsuario;
+    public Usuario(String nome, String senha) {
+        this.nome = nome;
         this.senha = senha;
     }
 
@@ -42,7 +42,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.nomeUsuario;
+        return this.nome;
     }
 
 

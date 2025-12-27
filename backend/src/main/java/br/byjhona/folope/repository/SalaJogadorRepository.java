@@ -1,14 +1,16 @@
 package br.byjhona.folope.repository;
 
-import br.byjhona.folope.domain.salaMatch.Sala;
+import br.byjhona.folope.domain.salaMatch.SalaJogador;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface SalaRepository extends JpaRepository<Sala, Long> {
+public interface SalaJogadorRepository extends JpaRepository<SalaJogador, Long> {
 
-    Optional<Sala> findByCodigo(String codigo);
+    List<SalaJogador> findBySalaId(Long salaId);
 
-    boolean existsByCodigo(String codigo);
+    Optional<SalaJogador> findBySalaIdAndUsuarioId(Long salaId, Long usuarioId);
 
+    long countBySalaIdAndSaiuIsNull(Long salaId);
 }

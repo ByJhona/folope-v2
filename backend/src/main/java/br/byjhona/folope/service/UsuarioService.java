@@ -14,8 +14,8 @@ public class UsuarioService {
         this.usuarioRepo = usuarioRepo;
     }
 
-    public Optional<Usuario> obterUsuarioPorNome(String nomeUsuario){
-        return usuarioRepo.getUsuarioByNomeUsuario(nomeUsuario);
+    public Optional<Usuario> obterUsuarioPorNome(String nomeUsuario) {
+        return usuarioRepo.getUsuarioByNome(nomeUsuario);
     }
 
 }

@@ -26,7 +26,7 @@ public class CurtidaFilmeService {
         if (existe) {
             throw new ObjetoDuplicadoException("Filme já curtido.");
         }
-        CurtidaFilme curtidaFilme = new CurtidaFilme(usuario.getId(),idFilme);
+        CurtidaFilme curtidaFilme = new CurtidaFilme(usuario.getId(), idFilme);
         return curtidaFilmeRepo.save(curtidaFilme);
     }
 
@@ -41,12 +41,17 @@ public class CurtidaFilmeService {
         Usuario usuario = usuarioServ.obterUsuarioPorNome(nomeUsuario).orElseThrow(() -> new ObjetoNaoEncontradaException("Usuario [%s] nao encontrado.", nomeUsuario));
 
         return curtidaFilmeRepo.findByUsuarioIdAndFilmeId(usuario.getId(), idFilme).orElseThrow(() ->
-            new ObjetoNaoEncontradaException("Curtida nao encontrada."));
+                new ObjetoNaoEncontradaException("Curtida nao encontrada."));
     }
 
-    @Transactional
     public boolean verificarExistencia(Long idFilme, String nomeUsuario) {
         Usuario usuario = usuarioServ.obterUsuarioPorNome(nomeUsuario).orElseThrow(() -> new ObjetoNaoEncontradaException("Usuario [%s] nao encontrado.", nomeUsuario));
         return curtidaFilmeRepo.existsByUsuarioIdAndFilmeId(usuario.getId(), idFilme);
     }
+
+    public Long contarQuantidade(Long idFilme) {
+        return curtidaFilmeRepo.countCurtidaFilmeByFilmeId(idFilme);
+    }
+
+
 }

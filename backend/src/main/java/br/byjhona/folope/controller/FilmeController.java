@@ -85,6 +85,12 @@ public class FilmeController {
         return ResponseEntity.ok(existe);
     }
 
+    @GetMapping("/{id}/curtir/quantidade")
+    public ResponseEntity<Long> contarCurtidasFilme(@PathVariable Long id) {
+        Long quantidade = curtidaFilmeServ.contarQuantidade(id);
+        return ResponseEntity.ok(quantidade);
+    }
+
     @PostMapping("/{id}/watchlist")
     public ResponseEntity<WatchlistFilme> watchlistFilme(@AuthenticationPrincipal Jwt jwt, @PathVariable Long id) {
         String nomeUsuario = jwt.getSubject();

@@ -1,7 +1,6 @@
 package br.byjhona.folope.domain.salaMatch;
 
-public enum SalaRegras {
-    LOBBY,
-    WAITING,
-    MATCHING
+public enum SalaRegra {
+    DONO,
+    CONVIDADO
 }

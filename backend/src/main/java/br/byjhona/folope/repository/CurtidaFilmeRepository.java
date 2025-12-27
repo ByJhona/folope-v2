@@ -12,4 +12,6 @@ public interface CurtidaFilmeRepository extends JpaRepository<CurtidaFilme, Long
     Boolean existsByUsuarioIdAndFilmeId(Long usuarioId, Long filmeId);
 
     Optional<CurtidaFilme> deleteByUsuarioIdAndFilmeId(Long usuarioId, Long filmeId);
+
+    Long countCurtidaFilmeByFilmeId(Long filmeId);
 }

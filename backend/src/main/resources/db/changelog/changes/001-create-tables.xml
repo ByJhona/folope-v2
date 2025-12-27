@@ -35,21 +35,6 @@
             </column>
         </createTable>
 
-        <createTable tableName="desejo">
-            <column name="id" type="BIGSERIAL">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="id_usuario" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="id_filme" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="data" type="timestamp">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
         <createTable tableName="usuario">
             <column name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
@@ -61,6 +46,80 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <createTable tableName="sala">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="codigo" type="varchar(10)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="nome" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="dono_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ativa" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="criado" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="sala_jogador">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="sala_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="usuario_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="role" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="conectado" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="criado" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="saiu" type="timestamp"/>
+        </createTable>
+        <addUniqueConstraint
+                tableName="sala_jogador"
+                columnNames="sala_id,usuario_id"
+                constraintName="uk_sala_usuario"/>
+        <createIndex indexName="idx_sala_codigo" tableName="sala">
+            <column name="codigo"/>
+        </createIndex>
+
+        <createIndex indexName="idx_sala_jogador_sala" tableName="sala_jogador">
+            <column name="sala_id"/>
+        </createIndex>
+
+        <createIndex indexName="idx_sala_jogador_usuario" tableName="sala_jogador">
+            <column name="usuario_id"/>
+        </createIndex>
+
+
     </changeSet>
+
 
 </databaseChangeLog>

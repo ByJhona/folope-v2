@@ -22,6 +22,13 @@ public class AuthService {
         String senhaBcrypt = passwordEncoder.encode(dto.senha());
         Usuario usuario = new Usuario(dto.nomeUsuario(), senhaBcrypt);
         Usuario usuarioCadastrado = authRepo.save(usuario);
-        return new UsuarioDTO(usuarioCadastrado.getUsername());
+        return new UsuarioDTO(
+                usuarioCadastrado.getUsername(),
+                null,      // avatar (placeholder)
+                null,      // bio
+                0,         // seguidores
+                0,         // seguindo
+                0          // pontuação
+        );
     }
 }

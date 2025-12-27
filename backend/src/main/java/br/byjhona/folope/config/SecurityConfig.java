@@ -112,9 +112,11 @@ public class SecurityConfig {
     public SecurityFilterChain resourceServerSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers( "/api/filmes/populares",
+                        .requestMatchers("/api/filmes/populares",
                                 "/api/filmes/{id}",
                                 "/api/filmes/{id}/curtir/status",
+                                "/api/filmes/{id}/curtir/quantidade",
+                                "/api/filmes/{id}/watchlist/status",
                                 "/auth/filmes/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -136,6 +138,7 @@ public class SecurityConfig {
                 .postLogoutRedirectUri("http://localhost:4200/")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
+                .scope("offline_access")
                 .clientSettings(ClientSettings.builder()
                         .requireAuthorizationConsent(false)
                         .build())

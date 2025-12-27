@@ -7,34 +7,38 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
+@Entity
+@Table(
+        name = "sala_jogador",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"sala_id", "usuario_id"})
+        }
+)
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "sala")
-@Getter
 public class SalaJogador {
+
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "codigo", nullable = false, unique = true, length = 10)
-    private String codigo;
 
-    @Column(name = "nome", nullable = false)
-    private String nome;
+    @Column(name = "sala_id", nullable = false)
+    private Long salaId;
+
+    @Column(name = "usuario_id", nullable = false)
+    private Long usuarioId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private SalaStatus status;
-    @Column(name = "dono_id", nullable = false)
-    private Long donoID;
+    @Column(name = "role", nullable = false)
+    private SalaRegra regra;
 
-    @Column(name = "ativa", nullable = false)
-    private boolean ativa;
-
+    @Column(name = "conectado", nullable = false)
+    private boolean conectado;
 
     @Column(name = "criado", nullable = false)
     private Instant criado;
 
-
+    @Column(name = "saiu")
+    private Instant saiu;
 }
