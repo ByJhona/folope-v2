@@ -1,6 +1,7 @@
 import {
   ApplicationConfig,
   importProvidersFrom,
+  LOCALE_ID,
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
@@ -12,29 +13,21 @@ import {
   withFetch,
   withInterceptors,
 } from '@angular/common/http';
-import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
-import { environment as env } from '../environments/environment';
+
+import { autenticacaoInterceptor } from './interceptors/autenticacao-interceptor';
+import { provideOAuthClient } from 'angular-oauth2-oidc';
+import { DATE_PIPE_DEFAULT_OPTIONS, registerLocaleData } from '@angular/common';
+import localeBr from '@angular/common/locales/pt';
+
+registerLocaleData(localeBr);
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAuth0({
-      domain: env.auth0.domain,
-      clientId: env.auth0.clientId,
-      authorizationParams: {
-        audience: env.auth0.authorizationParams.audience,
-        redirect_uri: window.location.origin,
-        prompt: 'login',
-        ui_locales: 'pt-BR en',
-      },
-      httpInterceptor: {
-        allowedList: [
-          `${env.api.serverUrl}/api/privado`,
-          `${env.api.serverUrl}/curtidas/existe`,
-          `${env.api.serverUrl}/curtidas`,
-        ],
-      },
-    }),
-    provideHttpClient(withFetch(), withInterceptors([authHttpInterceptorFn])),
+    { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: { timezone: '-0300' } },
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+
+    provideOAuthClient(),
+    provideHttpClient(withFetch(), withInterceptors([autenticacaoInterceptor])),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,

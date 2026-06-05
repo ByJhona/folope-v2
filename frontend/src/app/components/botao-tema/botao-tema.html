@@ -1,0 +1,14 @@
+<label class="flex cursor-pointer gap-2" for="trocar-tema">
+  <lucide-angular name="moon" class="h-[1.5em] opacity-70"></lucide-angular>
+  <input
+    id="trocar-tema"
+    type="checkbox"
+    value="light"
+    class="toggle theme-controller"
+    aria-labelledby="label-trocar-tema"
+    [checked]="temaClaro()"
+    (change)="trocarTema()"
+  />
+  <span id="label-trocar-tema" class="sr-only">Alterar tema</span>
+  <lucide-angular name="sun" class="h-[1.5em] opacity-70"></lucide-angular>
+</label>

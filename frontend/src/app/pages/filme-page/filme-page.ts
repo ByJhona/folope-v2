@@ -3,6 +3,7 @@ import {
   ElementRef,
   inject,
   QueryList,
+  signal,
   ViewChildren,
 } from '@angular/core';
 import { CardFilmePrincipal } from '../../components/card-filme-principal/card-filme-principal';
@@ -13,6 +14,8 @@ import { forkJoin, switchMap } from 'rxjs';
 import { CardComentario } from '../../components/card-comentario/card-comentario';
 import { Comentario } from '../../types/Comentario';
 import { ImagemFilme } from '../../types/ImagemFilme';
+import { CurtidaAlvoEnum } from '../../types/Curtida';
+import { AutenticacaoService } from '../../services/autenticacao-service';
 
 @Component({
   selector: 'folope-filme-page',
@@ -23,9 +26,13 @@ import { ImagemFilme } from '../../types/ImagemFilme';
 export class FilmePage {
   private readonly rotaAtiva = inject(ActivatedRoute);
   private readonly api = inject(ApiFolope);
-  filme: FilmeResumo | undefined = undefined;
+  public readonly authServ = inject(AutenticacaoService);
+  filme = signal<FilmeResumo | undefined>(undefined);
   comentarios!: Comentario[];
   imagens!: ImagemFilme[];
+  curtiu = signal<boolean>(false);
+  desejou = signal<boolean>(false);
+
   @ViewChildren('carouselItem') itensCarrosselImagens!: QueryList<ElementRef>;
 
   constructor() {
@@ -41,10 +48,38 @@ export class FilmePage {
         })
       )
       .subscribe(({ filme, comentarios, imagens }) => {
-        this.filme = filme;
         this.comentarios = comentarios.resultados;
+        this.filme.set(filme);
         this.imagens = imagens;
       });
+  }
+
+  curtirFilme(curtiu: boolean): void {
+    const idFilme = this.filme()?.id;
+
+    if (idFilme !== undefined && curtiu) {
+      this.api.salvarCurtida(idFilme, CurtidaAlvoEnum.FILME).subscribe(() => {
+        this.curtiu.set(true);
+      });
+    } else if (idFilme !== undefined && !curtiu) {
+      this.api.removerCurtida(idFilme, CurtidaAlvoEnum.FILME).subscribe(() => {
+        this.curtiu.set(false);
+      });
+    }
+  }
+
+  desejarFilme(desejou: boolean): void {
+    const idFilme = this.filme()?.id;
+
+    if (idFilme !== undefined && desejou) {
+      this.api.salvarDesejo(idFilme).subscribe(() => {
+        this.desejou.set(true);
+      });
+    } else if (idFilme !== undefined && !desejou) {
+      this.api.removerDesejo(idFilme).subscribe(() => {
+        this.desejou.set(false);
+      });
+    }
   }
 
   navegarCarrossel(index: number): void {

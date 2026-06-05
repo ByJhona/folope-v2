@@ -1,6 +1,7 @@
+@if(filme()){
 <div
   class="relative hero bg-cover bg-center"
-  [style.background-image]="'url(' + filme().urlCapaFundo + ')'"
+  [style.background-image]="'url(' + filme()?.urlCapaFundo + ')'"
 >
   <div
     class="absolute inset-0"
@@ -15,55 +16,75 @@
   <div class="hero-overlay"></div>
 
   <div class="hero-content flex-col lg:flex-row relative z-10">
-    <img
-      [src]="filme().urlCapaPoster"
-      class="max-w-sm rounded-lg shadow-2xl"
-      [alt]="'Pôster do filme ' + filme().titulo"
-    />
+    <div class="poster">
+      <img
+        [src]="filme()?.urlCapaPoster"
+        class="max-w-sm rounded-lg shadow-2xl"
+        [alt]="'Pôster do filme ' + filme()?.titulo"
+      />
+    </div>
 
     <div class="ml-12">
-      <button
-        (click)="buscarDetalhesFilme()"
-        [class.cursor-pointer]="tipo() !== 'filmePage'"
-        [class.disabled]="tipo() === 'filmePage'"
-      >
+      <button (click)="buscarDetalhesFilme()" class="cursor-pointer">
         <h1 class="text-5xl font-bold text-base-content">
-          {{ filme().titulo }}
+          {{ filme()?.titulo }}
         </h1>
       </button>
 
       <div class="informacoes-filme flex flex-direction-row items-center gap-4">
-        <folope-rating [id]="filme().id" [nota]="filme().nota"></folope-rating>
+        <folope-rating
+          [id]="filme()?.id"
+          [nota]="filme()?.nota"
+        ></folope-rating>
         <span>|</span>
-        <span>{{ filme().dataLancamento }}</span>
+
+        <span>{{ filme()?.dataLancamento | date }}</span>
       </div>
-      @if (tipo() === "filmePage") {
       <div class="acoes flex flex-row gap-2 mt-4">
-        <div class="tooltip" data-tip="Curtir">
+        <div
+          class="tooltip"
+          [attr.data-tip]="curtido() ? 'Descurtir' : 'Curtir'"
+        >
           <button
             class="btn btn-secondary"
-            [class.btn-soft]="!curtiu"
-            (click)="curtirFilme()"
+            [class.btn-soft]="!curtido()"
+            (click)="alterarEstadoCurtida(!this.curtido())"
+            [disabled]="false"
           >
             <lucide-angular
-              [name]="curtiu ? 'heart-off' : 'heart'"
+              [name]="curtido() ? 'heart-off' : 'heart'"
             ></lucide-angular>
           </button>
         </div>
-        <div class="tooltip" data-tip="Adicionar à lista">
+
+        <div
+          class="tooltip"
+          [attr.data-tip]="
+            desejado()
+              ? 'Remover da lista de desejos'
+              : 'Adicionar à lista de desejos'
+          "
+        >
           <button
-            class="btn btn-soft btn-accent"
-            (click)="buscarExistenciaCurtida()"
+            class="btn btn-accent"
+            [class.btn-soft]="!desejado()"
+            (click)="alterarEstadoDesejo(!this.desejado())"
+            [disabled]="!usuarioLogado()"
           >
-            <lucide-angular name="clock-plus"></lucide-angular>
+            <lucide-angular
+              [name]="desejado() ? 'clock-fading' : 'clock-plus'"
+            ></lucide-angular>
           </button>
         </div>
       </div>
-      }
+
       <p class="py-6 text-base-content">
-        {{ filme().sinopse }}
+        {{ filme()?.sinopse }}
       </p>
-      <button class="btn btn-primary">Assistir ao trailer</button>
     </div>
   </div>
 </div>
+
+}@else {
+<folope-skeleton-card-filme-principal />
+}

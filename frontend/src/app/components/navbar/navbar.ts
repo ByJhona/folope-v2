@@ -1,29 +1,30 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
-import { Auth } from '../../services/auth';
-import { User } from '@auth0/auth0-angular';
 import { RouterLink } from '@angular/router';
+import { AutenticacaoService } from '../../services/autenticacao-service';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { UsuarioService } from '../../services/usuario-service';
+import { BotaoTema } from '../botao-tema/botao-tema';
 
 @Component({
   selector: 'folope-navbar',
-  imports: [ReactiveFormsModule, LucideAngularModule, AsyncPipe, RouterLink],
+  imports: [ReactiveFormsModule, LucideAngularModule, RouterLink, BotaoTema],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
 export class Navbar {
-  usuario = signal<User | undefined | null>(undefined);
+  readonly autenticacaoServ = inject(AutenticacaoService);
+  readonly oAuth = inject(OAuthService);
+  private readonly usuarioServ = inject(UsuarioService);
+  usuario = computed(() => this.usuarioServ.usuario);
+
   pesquisa = new FormControl('');
-  constructor(public auth: Auth) {
-    auth.obterUsuarioAutenticado().subscribe((usuario) => {
-      this.usuario.set(usuario);
-    });
+
+  entrar() {
+    this.autenticacaoServ.entrar();
   }
-  login() {
-    this.auth.login();
-  }
-  logout() {
-    this.auth.logout();
+  sair() {
+    this.autenticacaoServ.sair();
   }
 }

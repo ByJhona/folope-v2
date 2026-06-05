@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ApiFolope } from '../../services/api-folope';
 import { FilmeResumo } from '../../types/FilmeResumo';
 import { Paginacao } from '../../types/Paginacao';
 import { CardInfo } from '../../components/card-info/card-info';
 import { CardFilmePrincipal } from '../../components/card-filme-principal/card-filme-principal';
+import { AutenticacaoService } from '../../services/autenticacao-service';
 
 @Component({
   selector: 'folope-home-page',
@@ -12,6 +13,7 @@ import { CardFilmePrincipal } from '../../components/card-filme-principal/card-f
   styleUrl: './home-page.scss',
 })
 export class HomePage {
+  readonly autenticacaoServ = inject(AutenticacaoService);
   filmes!: FilmeResumo[];
   filmeMaisPopular!: FilmeResumo;
   filmesCurtidos: FilmeResumo[] = [];
@@ -38,17 +40,5 @@ export class HomePage {
 
   removerFilmeLista(FilmeResumo: FilmeResumo) {
     this.filmes = this.filmes.filter((filme) => filme != FilmeResumo);
-  }
-
-  publico() {
-    this.apiServ.publico().subscribe((mensagem) => {
-      console.log(mensagem);
-    });
-  }
-
-  privado() {
-    this.apiServ.privado().subscribe((mensagem) => {
-      console.log(mensagem);
-    });
   }
 }

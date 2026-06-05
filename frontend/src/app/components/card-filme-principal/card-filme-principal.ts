@@ -1,39 +1,34 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FilmeResumo } from '../../types/FilmeResumo';
 import { Rating } from '../rating/rating';
 import { LucideAngularModule } from 'lucide-angular';
-import { TipoCardFilmePrincipal } from '../../types/TipoCardFilmePrincipal';
 import { Router } from '@angular/router';
-import { ApiFolope } from '../../services/api-folope';
-import { CurtidaAlvoEnum } from '../../types/Curtida';
+import { SkeletonCardFilmePrincipal } from '../skeleton-card-filme-principal/skeleton-card-filme-principal';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'folope-card-filme-principal',
-  imports: [Rating, LucideAngularModule],
+  imports: [Rating, LucideAngularModule, SkeletonCardFilmePrincipal, DatePipe],
   templateUrl: './card-filme-principal.html',
   styleUrl: './card-filme-principal.scss',
 })
 export class CardFilmePrincipal {
   router = inject(Router);
-  curtidasServ = inject(ApiFolope);
-  filme = input.required<FilmeResumo>();
-  tipo = input.required<TipoCardFilmePrincipal>();
-  curtiu = false;
+  filme = input<FilmeResumo | undefined>();
+  usuarioLogado = input<boolean>(false);
+  curtido = input<boolean>(false);
+  curtiu = output<boolean>();
+  desejado = input<boolean>(false);
+  desejou = output<boolean>();
 
   buscarDetalhesFilme() {
     this.router.navigate(['/filme', this.filme()?.id]);
   }
 
-  curtirFilme() {
-    this.curtidasServ
-      .salvarCurtida(this.filme().id, CurtidaAlvoEnum.FILME)
-      .subscribe((curtida) => {});
+  alterarEstadoCurtida(curtido: boolean) {
+    this.curtiu.emit(curtido);
   }
 
-  buscarExistenciaCurtida() {
-    this.curtidasServ
-      .buscarExistenciaCurtida(this.filme().id, CurtidaAlvoEnum.FILME)
-      .subscribe((existe) => {
-        this.curtiu = existe;
-      });
+  alterarEstadoDesejo(desejado: boolean) {
+    this.desejou.emit(desejado);
   }
 }

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Folope | Entrar / Cadastrar</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #181818, #202020);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-card {
+            background-color: #2b2b2b;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+            width: 350px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            background-color: #3b3b3b;
+            color: white;
+        }
+
+        input:focus {
+            background-color: #4b4b4b;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #ff0077;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #e6006b;
+        }
+
+        .msg {
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .msg.error {
+            color: #ff4d4d;
+        }
+
+        .msg.success {
+            color: #4dff88;
+        }
+
+        .toggle-link {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            color: #ccc;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.2rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease-in-out;
+        }
+
+.back-arrow:hover {
+    color: #ff0077;
+}
+
+
+        @media (max-width: 480px) {
+            .login-card {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<a class="back-arrow" href="http://localhost:4200">&#8592; Voltar</a>
+
+
+<div class="login-card">
+    <h1>Folope</h1>
+
+    <form id="login-form" method="post" th:action="@{/auth/login}"
+          th:style="${mostrarCadastro} ? 'display:none;' : 'display:block;'">
+        <div class="form-group">
+            <label for="username">Usuário</label>
+            <input id="username" name="username" placeholder="Seu usuário" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input id="password" name="password" placeholder="Sua senha" required type="password">
+        </div>
+        <button class="btn" type="submit">Entrar</button>
+        <div class="msg success" th:if="${msgSuccess}" th:text="${msgSuccess}"></div>
+
+        <div class="msg error" th:if="${param.error}">
+            Usuário ou senha inválidos.
+        </div>
+
+        <div class="msg logout" th:if="${param.logout}">
+            Logout realizado com sucesso.
+        </div>
+
+        <span class="toggle-link" onclick="toggleForms()">Não tem conta? Cadastre-se</span>
+    </form>
+
+    <form id="cadastro-form" method="post" style="display:none;" th:action="@{/auth/signup}"
+          th:style="${mostrarCadastro} ? 'display:block;' : 'display:none;'">
+        <div class="form-group">
+            <label for="newUsername">Usuário</label>
+            <input id="newUsername" name="nomeUsuario" placeholder="Escolha um usuário" required
+                   th:value="${nomeUsuario}"
+                   type="text">
+        </div>
+        <div class="form-group">
+            <label for="newPassword">Senha</label>
+            <input id="newPassword" name="senha" placeholder="Escolha uma senha" required type="password">
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">Confirme a senha</label>
+            <input id="confirmPassword" name="senhaConfirmada" placeholder="Confirme a senha" required type="password">
+        </div>
+        <button class="btn" type="submit">Cadastrar</button>
+
+        <div class="msg error" th:if="${msgError}" th:text="${msgError}"></div>
+        <div class="msg success" th:if="${msgSuccess}" th:text="${msgSuccess}"></div>
+
+        <span class="toggle-link" onclick="toggleForms()">Já tem conta? Entrar</span>
+    </form>
+</div>
+
+<script>
+    function toggleForms() {
+        const login = document.getElementById('login-form');
+        const cadastro = document.getElementById('cadastro-form');
+        login.style.display = login.style.display === 'none' ? 'block' : 'none';
+        cadastro.style.display = cadastro.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
+
+</body>
+</html>

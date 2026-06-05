@@ -13,5 +13,4 @@ public record ImagemFilmeDTO(@JsonAlias("height") Integer altura,
         this.largura = largura;
 
     }
-
 }
